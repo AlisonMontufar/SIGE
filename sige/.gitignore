@@ -1,0 +1,35 @@
+# Node modules
+/node_modules/
+
+# Build output
+/build/
+
+# Dependency directory
+/npm-debug.log
+
+# Logs
+*.log
+
+# Local env files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# VS Code settings folder
+.vscode/
+
+# MacOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+
+# Coverage directory used by testing tools
+/coverage/
+
+# Optional npm package lock file
+package-lock.json
+
+# Yarn package lock file
+yarn.lock
