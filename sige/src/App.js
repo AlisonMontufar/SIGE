@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';  // Importa React si tu configuración lo requiere
+import React, { useEffect } from 'react';  
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
-import Login from './components/Auth/Login'; // Asegúrate de que la ruta sea correcta
+import Login from './components/Auth/Login'; 
 
 function Home() {
-  const navigate = useNavigate();  // Usamos el hook para navegar
+  const navigate = useNavigate();  
 
-  // Redirigir automáticamente cuando el componente se monta
+
   useEffect(() => {
-    // Redirige a la ruta '/otra-vista' (Login) de forma automática
+
     navigate('/Login');
   }, [navigate]);
 

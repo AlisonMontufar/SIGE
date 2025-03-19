@@ -1,39 +1,52 @@
-/* Estilos generales para el contenedor */
-.login-container {
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body, html {
+    height: 100%;          
+  }
+  
+.welcome-image {
+    width: 100%;        
+    height: auto;          
+    display: block;       
+    object-fit: cover;     
+    max-height: 100vh;     
+  }
+  
+  .Cardenal-image {
+    position: absolute;   
+    bottom: 0px;          
+    right: 0px;          
+    width: 25%;            
+    height: auto;         
+    object-fit: cover;    
+  }
+  
+  .login-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #6EE7B7, #10B981);
+    min-height: 100vh;      
+    background: linear-gradient(135deg, #E2F6F2, #E2F6F2);
     padding: 1rem;
+    overflow: hidden;    
   }
   
-  /* Títulos */
-  .login-container h1 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #1D4ED8;
-    text-align: center;
-  }
-  
-  .login-container h2 {
-    font-size: 1.25rem;
-    font-style: italic;
-    color: #4B5563;
-    text-align: center;
-    margin-top: 0.5rem;
-  }
-  
-  /* Estilo del formulario */
+ 
   .form-container {
-    background-color: #F9FAFB;
+    background-color: rgba(24, 99, 67, 0.5); 
     padding: 2rem;
     border-radius: 1rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-top: 1.5rem;
     width: 20rem;
+    z-index: 1;            
   }
+  
   
   .form-container h3 {
     font-size: 1.25rem;
@@ -43,7 +56,7 @@
     text-align: center;
   }
   
-  /* Estilo de los inputs y select */
+
   input, select {
     width: 100%;
     padding: 0.75rem;
