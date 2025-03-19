@@ -1,0 +1,72 @@
+/* Estilos generales para el contenedor */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #6EE7B7, #10B981);
+    padding: 1rem;
+  }
+  
+  /* Títulos */
+  .login-container h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #1D4ED8;
+    text-align: center;
+  }
+  
+  .login-container h2 {
+    font-size: 1.25rem;
+    font-style: italic;
+    color: #4B5563;
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+  
+  /* Estilo del formulario */
+  .form-container {
+    background-color: #F9FAFB;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 1.5rem;
+    width: 20rem;
+  }
+  
+  .form-container h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1F2937;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  
+  /* Estilo de los inputs y select */
+  input, select {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    border: 1px solid #D1D5DB;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+  }
+  
+  /* Botón */
+  button {
+    width: 100%;
+    margin-top: 1rem;
+    background-color: #047857;
+    color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-size: 1.125rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #065F46;
+  }
+  
