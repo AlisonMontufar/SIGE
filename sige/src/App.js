@@ -9,7 +9,7 @@ function Homero() {
 
   useEffect(() => {
   
-    navigate('/');
+    navigate('/Login');
   }, [navigate]);
 
   return null;    
