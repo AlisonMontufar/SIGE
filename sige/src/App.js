@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import Login from './components/Auth/Login';
+import ListaEncuestas from './components/Encuestas/ListaEncuestas';
+import FormularioEncuesta from './components/Encuestas/FormularioEncuesta';
+import ResultadoEncuesta from './components/Encuestas/ResultadoEncuesta';
 
 import './App.css';
 
@@ -39,6 +42,14 @@ function Home() {
             <ul className="dropdown-menu">
               <li onClick={() => navigateTo('/calificaciones/envio-modificaciones')}>Envío y modificaciones</li>
               <li onClick={() => navigateTo('/calificaciones/desempeno-academico')}>Desempeño Académico</li>
+            </ul>
+          </div>
+
+          {/* Dropdown Encuestas */}
+          <div className="nav-item">
+            <button className="nav-button">📋 Encuestas ▼</button>
+            <ul className="dropdown-menu">
+              <li onClick={() => navigateTo('/encuestas')}>Lista de Encuestas</li>
             </ul>
           </div>
 
@@ -83,6 +94,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/Login" element={<Login />} />
 
+        {/* Rutas de Encuestas */}
+        <Route path="/encuestas" element={<ListaEncuestas />} />
+        <Route path="/encuesta/:id" element={<FormularioEncuesta />} />
+        <Route path="/encuesta/:id/resultados" element={<ResultadoEncuesta />} />
       </Routes>
     </Router>
   );
