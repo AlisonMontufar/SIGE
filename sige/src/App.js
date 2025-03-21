@@ -9,7 +9,7 @@ function Homero() {
 
   useEffect(() => {
   
-    navigate('/Login');
+    navigate('/');
   }, [navigate]);
 
   return null;    
@@ -19,8 +19,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/Login" element={<Login />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/Home" element={<Home />} />
       </Routes>
     </Router>
   );
