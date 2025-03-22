@@ -1,0 +1,59 @@
+.gestionar-encuestas {
+  padding: 20px;
+  background-color: #f9f9f9;
+  font-family: 'Arial', sans-serif;
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.gestionar-encuestas h1 {
+  color: #333;
+  text-align: center;
+}
+
+.encuesta-item {
+  background-color: #fff;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.encuesta-item h2 {
+  font-size: 1.5em;
+  color: #444;
+}
+
+.encuesta-item p {
+  font-size: 1em;
+  color: #777;
+}
+
+.encuesta-item button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-editar {
+  background-color: #0066cc;
+  color: white;
+}
+
+.btn-editar:hover {
+  background-color: #004d99;
+}
+
+.btn-eliminar {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.btn-eliminar:hover {
+  background-color: #cc0000;
+}
