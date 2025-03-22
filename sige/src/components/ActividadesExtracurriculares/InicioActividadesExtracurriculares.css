@@ -1,0 +1,50 @@
+.inicio-actividades {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.inicio-actividades h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.actividad-item {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.actividad-item a {
+  text-decoration: none;
+  color: #007bff;
+  font-size: 1.2rem;
+}
+
+.actividad-item a:hover {
+  text-decoration: underline;
+}
+
+.agregar-actividad {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn-agregar {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+}
+
+.btn-agregar:hover {
+  background-color: #0056b3;
+}

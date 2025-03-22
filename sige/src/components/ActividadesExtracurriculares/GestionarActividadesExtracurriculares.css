@@ -1,0 +1,68 @@
+.gestionar-actividades {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.gestionar-actividades h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.actividad-item {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.actividad-item h2 {
+  margin: 0 0 10px;
+  font-size: 1.5rem;
+}
+
+.actividad-item p {
+  margin: 0 0 10px;
+}
+
+.actividad-item button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.editar-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.eliminar-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.eliminar-btn:hover {
+  background-color: #d32f2f;
+}
+
+.confirmacion-eliminacion {
+  background-color: #ffebee;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.confirmacion-eliminacion button {
+  margin: 10px;
+}
+
+.confirmacion-eliminacion button:hover {
+  opacity: 0.8;
+}
