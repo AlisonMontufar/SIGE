@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Login from './components/Auth/Login';
+import Home from './components/PortalInicial/home';
 import InicioAdministrador from './components/Encuestas/Administrador/InicioAdministrador';
 import AgregarEncuesta from './components/Encuestas/Administrador/AgregarEncuesta';
 import GestionarEncuestas from './components/Encuestas/Administrador/GestionarEncuestas';
@@ -20,6 +21,9 @@ function App() {
       <Routes>
         {/* Ruta para login */}
         <Route path="/" element={<Login />} />
+        
+        {/* Ruta para el portal inicial */}
+        <Route path="/home" element={<Home />} />
         
         {/* Rutas de administrador */}
         <Route path="/admin" element={<InicioAdministrador />} />
