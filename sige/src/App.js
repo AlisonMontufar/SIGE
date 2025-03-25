@@ -8,6 +8,7 @@ import AgregarEncuesta from './components/Encuestas/Administrador/AgregarEncuest
 import GestionarEncuestas from './components/Encuestas/Administrador/GestionarEncuestas';
 import InicioAlumno from './components/Encuestas/Alumno/InicioAlumno';
 import Encuesta from './components/Encuestas/Alumno/Encuesta';
+import EnvModCalificaciones from './components/HistorialAcademico/Env-Mod-calificaciones';
 
 // Importa las vistas de actividades extracurriculares
 import InicioActividadesExtracurriculares from './components/ActividadesExtracurriculares/InicioActividadesExtracurriculares';
@@ -24,6 +25,9 @@ function App() {
         
         {/* Ruta para el portal inicial */}
         <Route path="/home" element={<Home />} />
+        
+        {/* Ruta para el Historial Academico */}
+        <Route path="/HistorialAcademico" element={<EnvModCalificaciones />} />
         
         {/* Rutas de administrador */}
         <Route path="/admin" element={<InicioAdministrador />} />

@@ -1,97 +1,117 @@
-import React, { useState } from 'react';
-import './Env-Mod-calificaciones.css'; 
+import React from 'react';
+import './Env-Mod-calificaciones.css';
 
-const EnvModCalificaciones = () => {
-  const [programaEducativo, setProgramaEducativo] = useState('');
-  const [grupo, setGrupo] = useState('');
-  const [asignatura, setAsignatura] = useState('');
-
-  const handleEditarCalificaciones = () => {
-    alert('Editar calificaciones');
+function EnvModCalificaciones() {
+  // Sample data
+  const professor = {
+    name: "Laura Alejandra Angeles Reyes",
+    program: "Programa Educativo"
   };
 
-  // Datos de ejemplo para la tabla
-  const estudiantes = [
-    { matricula: '001', nombre: 'Juan Pérez', unid1: 8, ar: 7, as: 90, calificacionFinal: 8.5 },
-    { matricula: '002', nombre: 'Ana Gómez', unid1: 9, ar: 8, as: 85, calificacionFinal: 8.7 },
-    { matricula: '003', nombre: 'Luis Martínez', unid1: 7, ar: 6, as: 80, calificacionFinal: 7.8 },
+  const programs = [
+    { id: 1, name: "Programa Educativo 1" },
+    { id: 2, name: "Programa Educativo 2" },
+    { id: 3, name: "Programa Educativo 3" }
+  ];
+
+  const groups = [
+    { id: 1, name: "Grupo A" },
+    { id: 2, name: "Grupo B" },
+    { id: 3, name: "Grupo C" }
+  ];
+
+  const subjects = [
+    { id: 1, name: "Matemáticas" },
+    { id: 2, name: "Español" },
+    { id: 3, name: "Ciencias" },
+    { id: 4, name: "Historia" }
+  ];
+
+  const students = [
+    { id: 1, name: "Juan Pérez", es: 85, ar: 90, asPercent: 80, finalGrade: 87.5 },
+    { id: 2, name: "María García", es: 78, ar: 92, asPercent: 85, finalGrade: 84.3 },
+    { id: 3, name: "Carlos López", es: 90, ar: 88, asPercent: 95, finalGrade: 89.5 }
   ];
 
   return (
-    <div className="container">
-      <div className="form-container">
-        <div className="form-group">
-          <label htmlFor="programaEducativo">Programa Educativo:</label>
-          <select
-            id="programaEducativo"
-            value={programaEducativo}
-            onChange={(e) => setProgramaEducativo(e.target.value)}
-          >
-            <option value="">Seleccione un programa</option>
-            <option value="Programa1">Programa 1</option>
-            <option value="Programa2">Programa 2</option>
-            <option value="Programa3">Programa 3</option>
-          </select>
+    <div className="grade-management-container">
+      <header className="grade-header">
+        <div className="header-top">
+          <p className="professor-name"><strong>Profesor:</strong> {professor.name}</p>
+          <h1 className="title-green">Envio Calificaciones</h1>
         </div>
-
-        <div className="form-group">
-          <label htmlFor="grupo">Grupo:</label>
-          <select
-            id="grupo"
-            value={grupo}
-            onChange={(e) => setGrupo(e.target.value)}
-          >
-            <option value="">Seleccione un grupo</option>
-            <option value="Grupo1">Grupo 1</option>
-            <option value="Grupo2">Grupo 2</option>
-            <option value="Grupo3">Grupo 3</option>
-          </select>
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="asignatura">Asignatura:</label>
-          <select
-            id="asignatura"
-            value={asignatura}
-            onChange={(e) => setAsignatura(e.target.value)}
-          >
-            <option value="">Seleccione una asignatura</option>
-            <option value="Asignatura1">Asignatura 1</option>
-            <option value="Asignatura2">Asignatura 2</option>
-            <option value="Asignatura3">Asignatura 3</option>
-          </select>
-        </div>
-
-        <button className="edit-button" onClick={handleEditarCalificaciones}>
-          Editar Calificaciones
-        </button>
-      </div>
-
-      <div className="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Matrícula</th>
-              <th>Nombre</th>
-              <th>Unid1</th>
-              <th>AR</th>
-              <th>%AS</th>
-              <th>Calificación Final</th>
-            </tr>
-          </thead>
-          <tbody>
-            {estudiantes.map((estudiante) => (
-              <tr key={estudiante.matricula}>
-                <td>{estudiante.matricula}</td>
-                <td>{estudiante.nombre}</td>
-                <td>{estudiante.unid1}</td>
-                <td>{estudiante.ar}</td>
-                <td>{estudiante.as}%</td>
-                <td>{estudiante.calificacionFinal}</td>
-              </tr>
+        
+        <div className="program-selector">
+          <div className="program-label">
+            <strong>Programa Educativo:</strong>
+          </div>
+          <select className="full-width-select">
+            {programs.map(program => (
+              <option key={program.id} value={program.id}>{program.name}</option>
             ))}
-          </tbody>
-        </table>
+          </select>
+        </div>
+        
+        <div className="group-selector">
+          <div className="group-field">
+            <strong>Grupos:</strong>
+            <select className="small-select">
+              {groups.map(group => (
+                <option key={group.id} value={group.id}>{group.name}</option>
+              ))}
+            </select>
+          </div>
+          <div className="subject-field">
+            <strong>Asignatura:</strong>
+            <select className="medium-select">
+              {subjects.map(subject => (
+                <option key={subject.id} value={subject.id}>{subject.name}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <button className='edit-button'>Editar Calificaciones</button>
+          </div>
+
+          
+        </div>
+      </header>
+
+      {/* Tabla corregida con estructura exacta */}
+      <div className="grades-table-container">
+        <div className="grades-table">
+          {/* Fila de encabezados principales */}
+          <div className="table-row main-header">
+            <div className="cell matricula-header">Matrículas</div>
+            <div className="cell nombre-header">Nombres</div>
+            <div className="cell unidi-header">UNID1 50%</div>
+            <div className="cell final-header">CALIF FINAL</div>
+          </div>
+          
+          {/* Fila de subencabezados */}
+          <div className="table-row sub-header">
+            <div className="cell"></div>
+            <div className="cell"></div>
+            <div className="cell">ES</div>
+            <div className="cell">AR</div>
+            <div className="cell">%AS</div>
+            <div className="cell">Calif</div>
+            <div className="cell">AS</div>
+          </div>
+          
+          {/* Filas de datos */}
+          {students.map(student => (
+            <div key={student.id} className="table-row data-row">
+              <div className="cell matricula-cell"></div>
+              <div className="cell nombre-cell">{student.name}</div>
+              <div className="cell">{student.es}</div>
+              <div className="cell">{student.ar}</div>
+              <div className="cell">{student.asPercent}%</div>
+              <div className="cell">{student.finalGrade}</div>
+              <div className="cell">AS</div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
