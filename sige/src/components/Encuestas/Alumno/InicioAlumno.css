@@ -1,46 +1,135 @@
-.inicio-alumno {
-  background-color: #f4f4f4;
-  padding: 20px;
-  font-family: 'Arial', sans-serif;
-  border-radius: 8px;
+/* Estilos base */
+.alumno-container {
   max-width: 800px;
-  margin: 0 auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: 'Segoe UI', Roboto, sans-serif;
 }
 
-.inicio-alumno h1 {
-  color: #333;
+/* Header */
+.encuestas-header {
   text-align: center;
-  font-size: 2em;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
+.encuestas-header h1 {
+  font-size: 28px;
+  color: #2c3e50;
+  margin-bottom: 8px;
+  font-weight: 600;
 }
 
-.encuesta-item {
-  background-color: #fff;
-  margin: 10px 0;
-  padding: 15px;
+.encuestas-header p {
+  color: #7f8c8d;
+  font-size: 16px;
+}
+
+/* Lista de encuestas */
+.encuestas-list {
+  display: grid;
+  gap: 20px;
+}
+
+/* Tarjetas */
+.encuesta-card {
+  border: 1px solid #e0e0e0;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+  background: white;
 }
 
-.encuesta-link {
+.encuesta-card:hover {
+  box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+.card-main {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.card-status {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.card-status.nueva {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.card-status.disponible {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.encuesta-card h2 {
+  font-size: 18px;
+  color: #2c3e50;
+  margin: 0 0 8px 0;
+  font-weight: 600;
+}
+
+.card-description {
+  color: #546e7a;
+  font-size: 15px;
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #78909c;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+/* Botón */
+.action-button {
+  background: #2c6e49;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 6px;
   text-decoration: none;
-  color: #0066cc;
-  font-size: 1.2em;
-  font-weight: bold;
-  display: block;
-  transition: color 0.3s;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
 }
 
-.encuesta-link:hover {
-  color: #004c99;
+.action-button:hover {
+  background: #245c3d;
+  transform: translateY(-1px);
 }
 
-.encuesta-item:hover {
-  background-color: #f9f9f9;
+/* Responsive */
+@media (max-width: 600px) {
+  .encuesta-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .card-main {
+    margin-right: 0;
+    width: 100%;
+  }
+  
+  .action-button {
+    width: 100%;
+    text-align: center;
+  }
 }

@@ -1,30 +1,31 @@
 import React from 'react';
-import './Encuesta.css'; // Importa el archivo de estilo
+import './Encuesta.css';
 
-const Encuesta = () => {
+const EncuestasDisponibles = () => {
+  const encuestas = [
+    { id: 1, titulo: 'Encuesta de Satisfacción', descripcion: 'Ayúdanos a mejorar nuestros servicios' },
+    { id: 2, titulo: 'Encuesta de Productos', descripcion: 'Opinión sobre nuestros nuevos productos' },
+    { id: 3, titulo: 'Encuesta de Experiencia', descripcion: 'Valora tu experiencia con nuestra plataforma' }
+  ];
+
   return (
-    <div className="encuesta">
-      <h1>Encuesta de Opinión</h1>
-      <form>
-        <div className="pregunta">
-          <label>¿Te gusta React?</label>
-          <div className="opciones">
-            <input type="radio" name="react" value="si" id="si" />
-            <label htmlFor="si">Sí</label>
-            <input type="radio" name="react" value="no" id="no" />
-            <label htmlFor="no">No</label>
+    <div className="encuestas-disponibles-container">
+      <h1 className="encuestas-titulo">Encuestas Disponibles</h1>
+      
+      <div className="encuestas-lista">
+        {encuestas.map((encuesta) => (
+          <div key={encuesta.id} className="encuesta-card">
+            <div className="encuesta-card-header">
+              <h2>{encuesta.titulo}</h2>
+              <span className="badge">Nueva</span>
+            </div>
+            <p>{encuesta.descripcion}</p>
+            <button className="btn-comenzar">Comenzar Encuesta</button>
           </div>
-        </div>
-
-        <div className="pregunta">
-          <label>¿Te gustaría aprender más sobre React?</label>
-          <textarea name="comentarios" placeholder="Escribe tus comentarios..."></textarea>
-        </div>
-
-        <button type="submit" className="enviar-btn">Enviar Respuestas</button>
-      </form>
+        ))}
+      </div>
     </div>
   );
 };
 
-export default Encuesta;
+export default EncuestasDisponibles;
