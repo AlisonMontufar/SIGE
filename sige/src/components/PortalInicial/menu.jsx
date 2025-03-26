@@ -42,7 +42,11 @@ function NavigationMenu() {
       </div>
 
       <div className="nav-item">
-        <button className="nav-button" onClick={() => navigateTo('/alumno')}> Encuestas</button>
+        <button className="nav-button">📄 Encuestas ▼</button>
+        <ul className="dropdown-menu">
+          <li onClick={() => navigateTo('/admin')}>Administrar Encuestas</li>
+          <li onClick={() => navigateTo('/alumno')}>Ver Encuestas</li>
+        </ul>
       </div>
 
       {/* Dropdown Calificaciones */}
