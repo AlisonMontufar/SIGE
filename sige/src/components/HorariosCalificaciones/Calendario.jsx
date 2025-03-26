@@ -2,6 +2,7 @@ import React from "react";
 import { FaDownload } from "react-icons/fa";
 import pdfCalendario from "./Calendario24-25.pdf"; // Asegura que la ruta del archivo PDF sea correcta
 import "./Calendario.css";  // Asegúrate de importar los estilos correctamente
+import NavigationMenu from '../PortalInicial/menu';
 
 const Calendario = () => {
   // Función para manejar la descarga del PDF
@@ -13,6 +14,9 @@ const Calendario = () => {
   };
 
   return (
+    <div>
+      <NavigationMenu />
+    
     <div className="calendario-container">
       <h2 className="title">📅 Calendario Escolar</h2>
       <div className="pdf-viewer">
@@ -27,6 +31,7 @@ const Calendario = () => {
       <button onClick={handleDownload} className="download-button">
         <FaDownload /> Descargar Calendario
       </button>
+    </div>
     </div>
   );
 };

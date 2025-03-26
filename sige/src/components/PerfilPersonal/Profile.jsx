@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaInstagram, FaFacebook } from "react-icons/fa";
 import "../PerfilPersonal/ProfileStyle.css"; // Archivo de estilos
+import NavigationMenu from '../PortalInicial/menu';
 
 const API_URL = "http://localhost:5000"; // Reemplázalo con la URL real del backend
 
@@ -157,6 +158,8 @@ const Profile = () => {
   };
 
   return (
+    <div>
+      <NavigationMenu />
     <div className="profile-container">
       {error && <div className="error-message">{error}</div>}
       <div className="profile-card">
@@ -251,6 +254,7 @@ const Profile = () => {
           </form>
         )}
       </div>
+    </div>
     </div>
   );
 };

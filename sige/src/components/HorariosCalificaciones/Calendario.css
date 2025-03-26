@@ -4,14 +4,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #f4f9f4; /* Fondo gris suave */
+  background-color: #96C2B9; /* Fondo gris suave */
   padding: 40px;
   margin: 40px auto;
+  margin-top: 100px;
   border-radius: 12px;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15); /* Sombra sutil */
   max-width: 900px;
   width: 100%;
-  border: 2px solid #b3e6c8; /* Borde suave */
+  border: 2px solid #96C2B9; /* Borde suave */
 }
 
 /* Título principal */
@@ -29,7 +30,7 @@
 .pdf-viewer {
   width: 100%;
   height: 500px;
-  background-color: white;
+  background-color: #96C2B9;
   border-radius: 10px;
   overflow: hidden;
   margin-bottom: 30px;
