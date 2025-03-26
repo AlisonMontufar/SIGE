@@ -198,18 +198,28 @@ app.get('/get-respuestas/:encuesta_id', async (req, res) => {
 });
 
 
+
 /** 📌 GET - Obtener perfil de usuario */
 app.get("/get-perfil/:matricula", async (req, res) => {
   const { matricula } = req.params;
   try {
     const pool = await connectToDatabase();
+
+    // Realizar INNER JOIN entre Usuarios y Portal_Personal usando usuario_id
     const result = await pool.request()
       .input("matricula", sql.NVarChar, matricula)
-      .query("SELECT * FROM Usuarios WHERE matricula = @matricula");
+      .query(`
+        SELECT u.nombre, pp.direccion, pp.telefono_casa, pp.telefono_celular, pp.correo_personal, pp.correo_institucional
+        FROM Portal_Personal pp
+        INNER JOIN Usuarios u ON pp.usuario_id = u.usuario_id
+        WHERE u.matricula = @matricula
+      `);
 
     if (result.recordset.length === 0) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
+    
+    // Devolver los datos del perfil
     res.json(result.recordset[0]);
   } catch (error) {
     console.error(error);
@@ -217,13 +227,18 @@ app.get("/get-perfil/:matricula", async (req, res) => {
   }
 });
 
-/** 📌 PUT - Actualizar perfil de usuario */
+
 app.put("/update-perfil", async (req, res) => {
   const { matricula, direccion, telefonoCasa, telefonoCelular, correoPersonal, correoInstitucional } = req.body;
 
+  // Verificar que todos los campos requeridos están presentes
+  if (!matricula || !direccion || !telefonoCasa || !telefonoCelular || !correoPersonal || !correoInstitucional) {
+    return res.status(400).json({ message: "Todos los campos son obligatorios." });
+  }
+
   try {
     const pool = await connectToDatabase();
-    await pool.request()
+    const result = await pool.request()
       .input("matricula", sql.NVarChar, matricula)
       .input("direccion", sql.NVarChar, direccion)
       .input("telefonoCasa", sql.NVarChar, telefonoCasa)
@@ -231,21 +246,29 @@ app.put("/update-perfil", async (req, res) => {
       .input("correoPersonal", sql.NVarChar, correoPersonal)
       .input("correoInstitucional", sql.NVarChar, correoInstitucional)
       .query(`
-        UPDATE Usuarios 
+        UPDATE Portal_Personal 
         SET direccion = @direccion, 
             telefono_casa = @telefonoCasa, 
             telefono_celular = @telefonoCelular, 
             correo_personal = @correoPersonal, 
-            correo_institucional = @correoInstitucional 
-        WHERE matricula = @matricula
+            correo_institucional = @correoInstitucional
+        FROM Portal_Personal pp
+        INNER JOIN usuarios u ON pp.usuario_id = u.usuario_id  -- Aquí la relación entre tablas
+        WHERE u.matricula = @matricula
       `);
+
+    // Comprobar si se afectaron filas
+    if (result.rowsAffected[0] === 0) {
+      return res.status(404).json({ message: "No se encontró el usuario con la matrícula proporcionada." });
+    }
 
     res.json({ message: "Perfil actualizado correctamente" });
   } catch (error) {
-    console.error(error);
+    console.error("Error al actualizar perfil:", error);
     res.status(500).json({ message: "Error al actualizar el perfil" });
   }
 });
+
 
 /** 📌 POST - Cambiar contraseña */
 app.post("/update-password", async (req, res) => {
@@ -253,26 +276,32 @@ app.post("/update-password", async (req, res) => {
 
   try {
     const pool = await connectToDatabase();
-    
-    // Verificar si la contraseña actual es correcta
+
+    // Verificar si el usuario existe
     const userResult = await pool.request()
       .input("matricula", sql.NVarChar, matricula)
-      .query("SELECT contrasena FROM Usuarios WHERE matricula = @matricula");
+      .query("SELECT contraseña FROM Usuarios WHERE matricula = @matricula");
 
     if (userResult.recordset.length === 0) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
-    const contrasenaActualDB = userResult.recordset[0].contrasena;
-    if (contrasenaActualDB !== actual) {
+    const contrasenaActualDB = userResult.recordset[0].contraseña;
+
+    // Verificar si la contraseña actual es correcta utilizando bcrypt
+    const isMatch = await bcrypt.compare(actual, contrasenaActualDB);
+    if (!isMatch) {
       return res.status(400).json({ message: "Contraseña actual incorrecta" });
     }
+
+    // Encriptar la nueva contraseña antes de actualizarla
+    const nuevaContrasenaEncriptada = await bcrypt.hash(nueva, 10);
 
     // Actualizar la nueva contraseña
     await pool.request()
       .input("matricula", sql.NVarChar, matricula)
-      .input("nueva", sql.NVarChar, nueva)
-      .query("UPDATE Usuarios SET contrasena = @nueva WHERE matricula = @matricula");
+      .input("nueva", sql.NVarChar, nuevaContrasenaEncriptada)
+      .query("UPDATE Usuarios SET contraseña = @nueva WHERE matricula = @matricula");
 
     res.json({ message: "Contraseña actualizada correctamente" });
   } catch (error) {
@@ -280,6 +309,7 @@ app.post("/update-password", async (req, res) => {
     res.status(500).json({ message: "Error al actualizar la contraseña" });
   }
 });
+
 
 
 app.listen(port, () => {

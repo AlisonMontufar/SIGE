@@ -13,6 +13,15 @@ const Profile = () => {
     correoInstitucional: "",
   });
 
+  const [originalData, setOriginalData] = useState({
+    nombre: "",
+    direccion: "",
+    telefonoCasa: "",
+    telefonoCelular: "",
+    correoPersonal: "",
+    correoInstitucional: "",
+  });
+
   const [isEditing, setIsEditing] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [passwords, setPasswords] = useState({
@@ -20,14 +29,21 @@ const Profile = () => {
     nueva: "",
     confirmar: "",
   });
+  const [error, setError] = useState(null);
 
-  // Obtener datos del usuario (simulación con matrícula fija, reemplázala con la correcta)
+  // Obtener la matrícula del localStorage
+  const matricula = localStorage.getItem("userMatricula");
+
+  // Obtener datos del usuario (usando la matrícula)
   useEffect(() => {
     const fetchUserData = async () => {
+      if (!matricula) return;
+
       try {
-        const response = await fetch(`${API_URL}/get-perfil/22300435`);
+        const response = await fetch(`${API_URL}/get-perfil/${matricula}`);
         if (!response.ok) throw new Error("Error al obtener el perfil");
         const data = await response.json();
+
         setFormData({
           direccion: data.direccion,
           telefonoCasa: data.telefono_casa,
@@ -35,17 +51,36 @@ const Profile = () => {
           correoPersonal: data.correo_personal,
           correoInstitucional: data.correo_institucional,
         });
+
+        // Guardar también el nombre en el estado
+        setOriginalData({
+          nombre: data.nombre, // Guardar el nombre
+          direccion: data.direccion,
+          telefonoCasa: data.telefono_casa,
+          telefonoCelular: data.telefono_celular,
+          correoPersonal: data.correo_personal,
+          correoInstitucional: data.correo_institucional,
+        });
       } catch (error) {
-        console.error(error);
+        console.error("Error en la solicitud:", error);
+        setError("No se pudo cargar la información del perfil.");
       }
     };
 
     fetchUserData();
-  }, []);
+  }, [matricula]);
+
+  // Formatear la etiqueta de cada campo
+  const formatLabel = (field) => {
+    return field.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase());
+  };
 
   // Manejar cambios en el formulario
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData((prevData) => ({
+      ...prevData,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handlePasswordChange = (e) => {
@@ -53,6 +88,16 @@ const Profile = () => {
   };
 
   const handleEdit = () => {
+    if (isEditing) {
+      // Restaurar datos originales si se cancela la edición
+      setFormData({
+        direccion: originalData.direccion,
+        telefonoCasa: originalData.telefonoCasa,
+        telefonoCelular: originalData.telefonoCelular,
+        correoPersonal: originalData.correoPersonal,
+        correoInstitucional: originalData.correoInstitucional,
+      });
+    }
     setIsEditing(!isEditing);
   };
 
@@ -67,14 +112,20 @@ const Profile = () => {
       const response = await fetch(`${API_URL}/update-perfil`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, matricula: "22300435" }),
+        body: JSON.stringify({ ...formData, matricula }),
       });
-      if (!response.ok) throw new Error("Error al actualizar el perfil");
+      const data = await response.json(); // Verifica la respuesta del backend
+      if (!response.ok) throw new Error(data.message || "Error al actualizar el perfil");
+
       alert("Datos actualizados correctamente");
+
+      // Actualiza los datos originales después de la actualización
+      setOriginalData({ ...formData });
+
       setIsEditing(false);
     } catch (error) {
       console.error(error);
-      alert("Hubo un error al actualizar los datos.");
+      setError("Hubo un error al actualizar los datos.");
     }
   };
 
@@ -90,7 +141,7 @@ const Profile = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          matricula: "22300435",
+          matricula,
           actual: passwords.actual,
           nueva: passwords.nueva,
         }),
@@ -107,10 +158,11 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
+      {error && <div className="error-message">{error}</div>}
       <div className="profile-card">
         <div className="profile-header">
           <div className="profile-avatar">👤</div>
-          <h2 className="profile-name">EMMANUEL CALVA OCAMPO</h2>
+          <h2 className="profile-name">{originalData.nombre || "Nombre no disponible"}</h2>
         </div>
 
         {/* Botones de acción */}
@@ -142,7 +194,7 @@ const Profile = () => {
         <form className="profile-form">
           {Object.keys(formData).map((field) => (
             <div key={field} className="form-group">
-              <label className="form-label">{field.replace(/([A-Z])/g, " $1")}</label>
+              <label className="form-label">{formatLabel(field)}</label>
               {isEditing ? (
                 <input
                   type="text"
