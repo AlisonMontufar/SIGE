@@ -51,8 +51,9 @@ export default function Login() {
       if (response.ok) {
         alert("Ingreso exitoso: " + data.message);
 
-        // Guarda el token de autenticación en el localStorage
+        // Guarda el token de autenticación y matrícula en el localStorage
         localStorage.setItem("authToken", data.token);
+        localStorage.setItem("userMatricula", user); // Guarda la matrícula
 
         // Redirige a la página de home
         navigate("/home");
