@@ -1,59 +1,96 @@
+/* Variables globales de color y diseño */
+:root {
+  --primary-color: #2c6e49;
+  --secondary-color: #4d9078;
+  --background-light: #e9f5f0;
+  --text-color: #333;
+  --white: #ffffff;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --error-color: #dc3545;
+}
+
 .gestionar-encuestas {
-  padding: 20px;
-  background-color: #f9f9f9;
-  font-family: 'Arial', sans-serif;
-  max-width: 900px;
-  margin: 0 auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Inter', 'Roboto', 'Segoe UI', sans-serif;
+  max-width: 800px;
+  margin: 100px auto;
+  padding: 2rem;
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
 }
 
 .gestionar-encuestas h1 {
-  color: #333;
+  color: var(--primary-color);
   text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.encuestas-list {
+  margin-top: 2rem;
 }
 
 .encuesta-item {
-  background-color: #fff;
-  padding: 15px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--white);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  border-left: 4px solid var(--primary-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.encuesta-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .encuesta-item h2 {
-  font-size: 1.5em;
-  color: #444;
+  font-size: 1.25rem;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
 }
 
 .encuesta-item p {
-  font-size: 1em;
-  color: #777;
+  font-size: 0.9rem;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  opacity: 0.8;
 }
 
-.encuesta-item button {
-  padding: 10px 20px;
-  margin-top: 10px;
-  margin-right: 10px;
+.encuesta-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.btn-editar, 
+.btn-eliminar {
+  padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
   cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
 .btn-editar {
-  background-color: #0066cc;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--white);
 }
 
 .btn-editar:hover {
-  background-color: #004d99;
+  background-color: var(--secondary-color);
 }
 
 .btn-eliminar {
-  background-color: #ff4d4d;
-  color: white;
+  background-color: var(--error-color);
+  color: var(--white);
 }
 
 .btn-eliminar:hover {
-  background-color: #cc0000;
+  background-color: #c82333;
 }

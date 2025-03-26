@@ -1,57 +1,75 @@
+/* Variables globales de color y diseño */
+:root {
+  --primary-color: #2c6e49;
+  --secondary-color: #4d9078;
+  --background-light: #e9f5f0;
+  --text-color: #333;
+  --white: #ffffff;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 .editar-encuesta {
-    padding: 20px;
-    background-color: #fff;
-    font-family: 'Arial', sans-serif;
-    max-width: 800px;
-    margin: 0 auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .editar-encuesta h1 {
-    color: #333;
-    text-align: center;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  .form-group input,
-  .form-group select {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .pregunta-form {
-    margin-bottom: 30px;
-  }
-  
-  .pregunta-form input {
-    width: 100%;
-    padding: 10px;
-  }
-  
-  .pregunta-form select {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-  }
-  
-  .actualizar-encuesta {
-    padding: 10px;
-    background-color: #0066cc;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-  }
-  
-  .actualizar-encuesta:hover {
-    background-color: #004d99;
-  }
-  
+  font-family: 'Inter', 'Roboto', 'Segoe UI', sans-serif;
+  max-width: 500px;
+  margin: 100px auto;
+  padding: 2rem;
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.editar-encuesta h1 {
+  color: var(--primary-color);
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group input, 
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--secondary-color);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus, 
+.form-group select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(44, 110, 73, 0.2);
+}
+
+.pregunta-form {
+  background-color: var(--white);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 1rem;
+  box-shadow: var(--box-shadow);
+}
+
+.actualizar-encuesta {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+}
+
+.actualizar-encuesta:hover {
+  background-color: var(--secondary-color);
+}

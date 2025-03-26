@@ -1,49 +1,94 @@
 .inicio-administrador {
-  background-color: #f4f4f9;
-  padding: 30px;
+  background-color: #cde8dc;
   font-family: 'Arial', sans-serif;
   text-align: center;
+  padding: 20px;
+}
+
+.header {
+  background-color: #165b36;
+  color: white;
+  padding: 15px;
+  font-size: 1.2em;
+}
+
+.contenedor {
+  background-color: #d0f0e0;
+  padding: 20px;
+  border-radius: 8px;
   max-width: 900px;
   margin: 0 auto;
-  border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.inicio-administrador h1 {
-  color: #333;
-  font-size: 2em;
+h1 {
+  color: #165b36;
+}
+
+.info-profesor {
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   margin-bottom: 20px;
 }
 
-nav {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.input-text, .input-select {
+  padding: 8px;
+  border: 1px solid #165b36;
+  border-radius: 4px;
+  font-size: 1em;
 }
 
-.menu {
-  list-style-type: none;
-  padding: 0;
-}
-
-.menu-item {
-  display: block;
-  padding: 12px 20px;
-  margin: 10px 0;
-  color: #0066cc;
-  text-decoration: none;
-  font-size: 1.2em;
+.btn-editar, .menu-item {
+  background-color: #165b36;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
   border-radius: 5px;
-  background-color: #f0f0f0;
-  transition: background-color 0.3s;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1.1em;
+  text-align: center;
+  margin: 10px 5px;
 }
 
-.menu-item:hover {
-  background-color: #e0e0e0;
-  color: #004d99;
+.btn-editar:hover, .menu-item:hover {
+  background-color: #127a50;
 }
 
-.menu-item:active {
-  background-color: #ccc;
+.tabla-calificaciones {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.tabla-calificaciones th, .tabla-calificaciones td {
+  border: 1px solid #165b36;
+  padding: 8px;
+}
+
+.input-tabla {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #165b36;
+}
+
+.btn-calificar {
+  background-color: #165b36;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 10px 5px;
+}
+
+.btn-calificar:hover {
+  background-color: #127a50;
 }

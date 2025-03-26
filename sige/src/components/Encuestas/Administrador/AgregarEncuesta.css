@@ -1,58 +1,105 @@
+/* Variables globales de color y diseño */
+:root {
+  --primary-color: #2c6e49;
+  --secondary-color: #4d9078;
+  --background-light: #e9f5f0;
+  --text-color: #333;
+  --white: #ffffff;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 .agregar-encuesta {
-  padding: 20px;
-  background-color: #fff;
-  font-family: 'Arial', sans-serif;
-  max-width: 800px;
-  margin: 0 auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Inter', 'Roboto', 'Segoe UI', sans-serif;
+  max-width: 500px; /* Reducido el ancho */
+  margin: 100px auto; /* Aumentado el margen superior para bajar el contenedor */
+  padding: 2rem;
+  background-color: var(--white); /* Cambiado a blanco para que contraste con el fondo */
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
 }
 
 .agregar-encuesta h1 {
-  color: #333;
+  color: var(--primary-color);
   text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
 }
 
-.form-group input,
+.form-group input, 
 .form-group select {
   width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  padding: 0.75rem;
+  border: 1px solid var(--secondary-color);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  transition: all 0.3s ease;
 }
 
-.agregar-pregunta,
-.crear-encuesta {
-  padding: 10px;
-  background-color: #0066cc;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.agregar-pregunta:hover,
-.crear-encuesta:hover {
-  background-color: #004d99;
+.form-group input:focus, 
+.form-group select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(44, 110, 73, 0.2);
 }
 
 .pregunta-form {
-  margin-bottom: 30px;
+  background-color: var(--white);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 1rem;
+  box-shadow: var(--box-shadow);
 }
 
-.pregunta-form input {
+.agregar-pregunta, 
+.crear-encuesta {
+  display: block;
   width: 100%;
-  padding: 10px;
+  padding: 0.75rem;
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
 }
 
-.pregunta-form select {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
+.agregar-pregunta:hover, 
+.crear-encuesta:hover {
+  background-color: var(--secondary-color);
+}
+
+.crear-encuesta {
+  background-color: var(--secondary-color);
+}
+
+.crear-encuesta:hover {
+  background-color: var(--primary-color);
+}
+
+.error {
+  color: #d9534f;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.eliminar-pregunta {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  margin-top: 0.5rem;
+  cursor: pointer;
+}
+
+.eliminar-pregunta:hover {
+  background-color: #c82333;
 }
