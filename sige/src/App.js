@@ -16,6 +16,11 @@ import AgregarActividadExtracurricular from './components/ActividadesExtracurric
 import GestionarActividadesExtracurriculares from './components/ActividadesExtracurriculares/GestionarActividadesExtracurriculares';
 import VerActividadExtracurricular from './components/ActividadesExtracurriculares/VerActividadExtracurricular'; // Nuevo componente
 
+
+import Calendario from './components/HorariosCalificaciones/Calendario';
+import Calificaciones from './components/HorariosCalificaciones/Calificaciones'; 
+import Perfil from './components/PerfilPersonal/Profile'; 
+
 import PrivateRoute from './components/Auth/PrivateRoute'; // Importar el componente de ruta privada
 
 function App() {
@@ -43,6 +48,13 @@ function App() {
         <Route path="/admin/agregar-actividad" element={<PrivateRoute><AgregarActividadExtracurricular /></PrivateRoute>} />
         <Route path="/admin/gestionar-actividades" element={<PrivateRoute><GestionarActividadesExtracurriculares /></PrivateRoute>} />
         <Route path="/admin/actividad/:id" element={<PrivateRoute><VerActividadExtracurricular /></PrivateRoute>} />
+
+        <Route path="/calendario" element={<Calendario />} />
+        <Route path="/calificaciones" element={<Calificaciones />} />
+        <Route path="/perfil" element={<Perfil />} />
+
+
+
       </Routes>
     </Router>
   );

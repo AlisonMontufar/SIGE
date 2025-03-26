@@ -1,0 +1,85 @@
+/* Estilos generales del calendario */
+.calendario-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f4f9f4; /* Fondo gris suave */
+  padding: 40px;
+  margin: 40px auto;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15); /* Sombra sutil */
+  max-width: 900px;
+  width: 100%;
+  border: 2px solid #b3e6c8; /* Borde suave */
+}
+
+/* Título principal */
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #388e3c; /* Verde UTTT */
+  margin-bottom: 20px;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  letter-spacing: 1.5px;
+}
+
+/* Contenedor del visor PDF */
+.pdf-viewer {
+  width: 100%;
+  height: 500px;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 30px;
+  padding: 15px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+/* Botón de descarga */
+.download-button {
+  background-color: #388e3c; /* Verde UTTT */
+  color: white;
+  padding: 12px 30px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.download-button:hover {
+  background-color: #2c6e2c; /* Color más oscuro al pasar el cursor */
+  transform: scale(1.05); /* Efecto de escala al pasar el cursor */
+}
+
+.download-button .fa-download {
+  margin-right: 10px; /* Espaciado entre el icono y el texto */
+  font-size: 22px; /* Icono más grande */
+}
+
+/* Media Queries - Responsividad para dispositivos pequeños */
+@media (max-width: 768px) {
+  .calendario-container {
+    padding: 20px;
+  }
+
+  .pdf-viewer {
+    height: 350px;
+  }
+
+  .title {
+    font-size: 26px;
+  }
+
+  .download-button {
+    font-size: 16px;
+    padding: 10px 25px;
+  }
+}

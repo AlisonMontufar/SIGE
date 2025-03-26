@@ -198,10 +198,94 @@ app.get('/get-respuestas/:encuesta_id', async (req, res) => {
 });
 
 
+/** 📌 GET - Obtener perfil de usuario */
+app.get("/get-perfil/:matricula", async (req, res) => {
+  const { matricula } = req.params;
+  try {
+    const pool = await connectToDatabase();
+    const result = await pool.request()
+      .input("matricula", sql.NVarChar, matricula)
+      .query("SELECT * FROM Usuarios WHERE matricula = @matricula");
+
+    if (result.recordset.length === 0) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+    res.json(result.recordset[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+});
+
+/** 📌 PUT - Actualizar perfil de usuario */
+app.put("/update-perfil", async (req, res) => {
+  const { matricula, direccion, telefonoCasa, telefonoCelular, correoPersonal, correoInstitucional } = req.body;
+
+  try {
+    const pool = await connectToDatabase();
+    await pool.request()
+      .input("matricula", sql.NVarChar, matricula)
+      .input("direccion", sql.NVarChar, direccion)
+      .input("telefonoCasa", sql.NVarChar, telefonoCasa)
+      .input("telefonoCelular", sql.NVarChar, telefonoCelular)
+      .input("correoPersonal", sql.NVarChar, correoPersonal)
+      .input("correoInstitucional", sql.NVarChar, correoInstitucional)
+      .query(`
+        UPDATE Usuarios 
+        SET direccion = @direccion, 
+            telefono_casa = @telefonoCasa, 
+            telefono_celular = @telefonoCelular, 
+            correo_personal = @correoPersonal, 
+            correo_institucional = @correoInstitucional 
+        WHERE matricula = @matricula
+      `);
+
+    res.json({ message: "Perfil actualizado correctamente" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al actualizar el perfil" });
+  }
+});
+
+/** 📌 POST - Cambiar contraseña */
+app.post("/update-password", async (req, res) => {
+  const { matricula, actual, nueva } = req.body;
+
+  try {
+    const pool = await connectToDatabase();
+    
+    // Verificar si la contraseña actual es correcta
+    const userResult = await pool.request()
+      .input("matricula", sql.NVarChar, matricula)
+      .query("SELECT contrasena FROM Usuarios WHERE matricula = @matricula");
+
+    if (userResult.recordset.length === 0) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+
+    const contrasenaActualDB = userResult.recordset[0].contrasena;
+    if (contrasenaActualDB !== actual) {
+      return res.status(400).json({ message: "Contraseña actual incorrecta" });
+    }
+
+    // Actualizar la nueva contraseña
+    await pool.request()
+      .input("matricula", sql.NVarChar, matricula)
+      .input("nueva", sql.NVarChar, nueva)
+      .query("UPDATE Usuarios SET contrasena = @nueva WHERE matricula = @matricula");
+
+    res.json({ message: "Contraseña actualizada correctamente" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al actualizar la contraseña" });
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
 });
+
 
 
 
