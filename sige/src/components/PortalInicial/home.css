@@ -212,3 +212,20 @@ body {
 
   
 
+  .notification-menu {
+    position: fixed;
+    top: 20%;
+    right: 20px;
+    transform: translateY(-50%);
+    background-color: #fff;
+    border-radius: 50%;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    z-index: 100;
+  }
+  
+  .notification-menu:hover {
+    background-color: #f0f0f0;
+  }
+  

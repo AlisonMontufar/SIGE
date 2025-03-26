@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react';
-import NavigationMenu from './menu'
+import React, { useState, useEffect } from 'react';
+import NavigationMenu from './menu';
+import { FiBell } from 'react-icons/fi'; // Icono de campana
+import Notifications from '../Notificaciones/notificaciones'; // Importar el componente de notificaciones
 import './home.css';
 import Cardenal from './img/Cardenal.png';
 import R1 from './img/R1.png';
@@ -12,6 +14,8 @@ import R3 from './img/R2.png';
 import LogoUt from './img/image 35 (1).png';
 
 function Home() {
+  const [showNotifications, setShowNotifications] = useState(false); // Estado para controlar la visibilidad de las notificaciones
+
   useEffect(() => {
     const loadFacebookSDK = () => {
       if (window.FB) return;
@@ -25,11 +29,14 @@ function Home() {
     loadFacebookSDK();
   }, []);
 
+  // Función para mostrar o esconder las notificaciones
+  const toggleNotifications = () => {
+    setShowNotifications(!showNotifications);
+  };
+
   return (
     <div className="App">
-      
-        <NavigationMenu/>
-      
+      <NavigationMenu />
 
       <div className="Titulo-bienvenida">
         <h1>Bienvenido</h1>
@@ -53,6 +60,14 @@ function Home() {
           </div>
         </div>
       </div>
+
+
+      <div className="notification-menu" onClick={toggleNotifications}>
+        <FiBell size={30} color="#000" />
+      </div>
+
+
+      {showNotifications && <Notifications />}
 
       {/* Imágenes en las esquinas */}
       <img src={R1} alt="Esquina izquierda" className="corner-image-left" />

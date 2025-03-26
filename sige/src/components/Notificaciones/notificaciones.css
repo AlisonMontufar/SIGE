@@ -1,0 +1,28 @@
+/* notifications.css */
+.notifications-container {
+    position: fixed;
+    top: 175px; /* Posición desde la parte superior */
+    right: 30px; /* Posición desde la parte derecha */
+    width: 300px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 200;
+  }
+  
+  .notifications-container h3 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .notifications-container ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .notifications-container ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
