@@ -34,9 +34,9 @@ function NavigationMenu() {
 
       {/* Dropdown Planeación Didáctica */}
       <div className="nav-item">
-        <button className="nav-button">📄 Actividades ▼</button>
+        <button className="nav-button">📄 Eventos ▼</button>
         <ul className="dropdown-menu">
-          <li onClick={() => navigateTo('/admin/gestionar-actividades')}>Extracurriculares</li>
+          <li onClick={() => navigateTo('/admin/gestionar-actividades')}>Gestionar Eventos</li>
           <li onClick={() => navigateTo('/eventosAcademicos')}>Eventos Academicos</li>
         </ul>
       </div>
