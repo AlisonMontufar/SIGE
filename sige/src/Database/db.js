@@ -2,11 +2,11 @@ const sql = require('mssql');
 
 
 const config = {
-  user: 'sa',
-  password: '1234',
-  server: 'LAPTOP-KFVM4IHP',
-  database: 'Sige',
-  options: {
+  user: 'javierhernandez_SampleDB',
+  password: 'admin123',
+  server: 'sql.bsite.net\\MSSQL2016',
+  database: 'javierhernandez_SampleDB',
+  options: {
     encrypt: true,
     trustServerCertificate: true,
   },
