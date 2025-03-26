@@ -34,15 +34,15 @@ function NavigationMenu() {
 
       {/* Dropdown Planeación Didáctica */}
       <div className="nav-item">
-        <button className="nav-button">📄 Registro de Actividades ▼</button>
+        <button className="nav-button">📄 Actividades ▼</button>
         <ul className="dropdown-menu">
-          <li onClick={() => navigateTo('/admin/actividades')}>Extracurriculares</li>
-          <li onClick={() => navigateTo('/planeacion/opcion2')}>Eventos Academicos</li>
+          <li onClick={() => navigateTo('/admin/gestionar-actividades')}>Extracurriculares</li>
+          <li onClick={() => navigateTo('/eventosAcademicos')}>Eventos Academicos</li>
         </ul>
       </div>
 
       <div className="nav-item">
-        <button className="nav-button" onClick={() => navigateTo('/')}> Encuestas</button>
+        <button className="nav-button" onClick={() => navigateTo('/alumno')}> Encuestas</button>
       </div>
 
       {/* Dropdown Calificaciones */}

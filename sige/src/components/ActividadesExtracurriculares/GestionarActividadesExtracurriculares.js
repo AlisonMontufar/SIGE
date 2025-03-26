@@ -92,6 +92,12 @@ const GestionarActividadesExtracurriculares = () => {
           ))
         )}
       </div>
+      
+      <div className="actions-section">
+          <Link to="/admin/agregar-actividad" className="btn-primary">
+            <i className="fas fa-plus"></i> Agregar Nueva Actividad
+          </Link>
+        </div>
 
       {/* Modal de confirmación */}
       {mostrarModal && (
@@ -112,8 +118,10 @@ const GestionarActividadesExtracurriculares = () => {
             </div>
           </div>
         </div>
+        
       )}
     </div>
+    
   );
 };
 
