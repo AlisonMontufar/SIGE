@@ -29,16 +29,20 @@ function NavigationMenu() {
     <div className="navigation-bar">
       {/* Botón de Home */}
       <div className="nav-item">
-        <button className="nav-button" onClick={() => navigateTo('/')}>🏠 Inicio ▼</button>
+        <button className="nav-button" onClick={() => navigateTo('/')}>🏠 Inicio </button>
       </div>
 
       {/* Dropdown Planeación Didáctica */}
       <div className="nav-item">
-        <button className="nav-button">📄 Planeación Didáctica ▼</button>
+        <button className="nav-button">📄 Registro de Actividades ▼</button>
         <ul className="dropdown-menu">
-          <li onClick={() => navigateTo('/admin/actividades')}>Opción 1</li>
-          <li onClick={() => navigateTo('/planeacion/opcion2')}>Opción 2</li>
+          <li onClick={() => navigateTo('/admin/actividades')}>Extracurriculares</li>
+          <li onClick={() => navigateTo('/planeacion/opcion2')}>Eventos Academicos</li>
         </ul>
+      </div>
+
+      <div className="nav-item">
+        <button className="nav-button" onClick={() => navigateTo('/')}> Encuestas</button>
       </div>
 
       {/* Dropdown Calificaciones */}
@@ -54,8 +58,9 @@ function NavigationMenu() {
       <div className="nav-item">
         <button className="nav-button">📅 Calendario/Horarios ▼</button>
         <ul className="dropdown-menu">
-          <li onClick={() => navigateTo('/calendario/horario-clases')}>Horario de clases</li>
-          <li onClick={() => navigateTo('/calendario/calendario')}>Calendario</li>
+          <li onClick={() => navigateTo('/horarios')}>Horarios</li>
+          <li onClick={() => navigateTo('/calificaciones')}>Calificaciones</li>
+          <li onClick={() => navigateTo('/calendario')}>Calendario</li>
         </ul>
       </div>
 
@@ -63,7 +68,7 @@ function NavigationMenu() {
       <div className="nav-item">
         {matricula ? (
           <>
-            <button className="profile-button">👤 Perfil: {matricula} ▼</button>
+            <button onClick={() => navigateTo('/perfil')} className="profile-button">👤 Perfil: {matricula} ▼</button>
             <ul className="dropdown-menu">
               <li onClick={() => navigateTo('/perfil/configuracion')}>Ajustes</li>
               <li onClick={handleLogout}>Cerrar sesión</li>
