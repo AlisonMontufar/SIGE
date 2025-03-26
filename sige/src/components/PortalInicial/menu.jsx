@@ -20,7 +20,7 @@ function NavigationMenu() {
       <div className="nav-item">
         <button className="nav-button">📄 Planeación Didáctica ▼</button>
         <ul className="dropdown-menu">
-          <li onClick={() => navigateTo('/planeacion/opcion1')}>Opción 1</li>
+          <li onClick={() => navigateTo('/admin/actividades')}>Opción 1</li>
           <li onClick={() => navigateTo('/planeacion/opcion2')}>Opción 2</li>
         </ul>
       </div>
