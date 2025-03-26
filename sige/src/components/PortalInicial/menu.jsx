@@ -68,7 +68,7 @@ function NavigationMenu() {
       <div className="nav-item">
         {matricula ? (
           <>
-            <button onClick={() => navigateTo('/perfil')} className="profile-button">👤 Perfil: {matricula} ▼</button>
+            <button onClick={() => navigateTo('/perfil')}>👤 Perfil: {matricula} ▼</button>
             <ul className="dropdown-menu">
               <li onClick={() => navigateTo('/perfil/configuracion')}>Ajustes</li>
               <li onClick={handleLogout}>Cerrar sesión</li>
