@@ -86,4 +86,97 @@ body {
     justify-content: center;
     align-items: center;
   }
+
   
+
+  .corner-image-left {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    top:260px;
+    width: 20%; /* Ajusta el tamaño según sea necesario */
+    height: auto;
+    object-fit: contain;
+    z-index: 10; /* Asegura que esté al frente */
+  }
+  
+  .corner-image-left-r2 {
+    position: absolute;
+    bottom: 0;
+    top: 190px;
+    left: 0;
+    width: 18%; /* Ajusta el tamaño según sea necesario */
+    height: auto;
+    object-fit: contain;
+    z-index: 1; /* Coloca este elemento detrás de los otros */
+  }
+  
+  .corner-image-left-r3 {
+    position: absolute;
+    bottom: 20px;
+    top: 350px;
+    left: 0px;
+    right: 30px;
+    width: 25%; /* Ajusta el tamaño según sea necesario */
+    height: auto;
+    object-fit: contain;
+    z-index: 1; /* Coloca este elemento detrás de los otros */
+  }
+  .corner-image-logo {
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    top:450px;
+    width: 15%; /* Ajusta el tamaño según sea necesario */
+    height: auto;
+    object-fit: contain;
+    z-index: 10; /* Asegura que esté al frente */
+  }
+  
+  .corner-image-right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+   
+    width: 25%; /* Ajusta el tamaño según sea necesario */
+    height: auto;
+    object-fit: contain;
+  }
+
+  .corner-image-right-p1 {
+    position: absolute;
+    bottom: 0;
+    right:360px;
+
+    width: 10%; /* Ajusta el tamaño según sea necesario */
+    height: auto;
+    object-fit: contain;
+  }
+  .corner-image-right-p2 {
+    position: absolute;
+    bottom: 5;
+    right: 370px;
+   
+    width: 10%; /* Ajusta el tamaño según sea necesario */
+    height: auto;
+    object-fit: contain;
+  }
+
+  .corner-image-right-p3 {
+    position: absolute;
+    bottom: 190px;
+    right:0px;
+
+    width: 3%; /* Ajusta el tamaño según sea necesario */
+    height: auto;
+    object-fit: contain;
+  }
+  .corner-image-right-p4 {
+    position: absolute;
+    bottom: 180px;
+    right: 0px;
+   
+    width: 5%; /* Ajusta el tamaño según sea necesario */
+    height: auto;
+    object-fit: contain;
+  }

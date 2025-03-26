@@ -1,85 +1,85 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body, html {
-    height: 100%;          
-  }
-  
-.welcome-image {
-    width: 100%;        
-    height: auto;          
-    display: block;       
-    object-fit: cover;     
-    max-height: 100vh;     
-  }
-  
-  .Cardenal-image {
-    position: absolute;   
-    bottom: 0px;          
-    right: 0px;          
-    width: 25%;            
-    height: auto;         
-    object-fit: cover;    
-  }
-  
-  .login-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;      
-    background: linear-gradient(135deg, #E2F6F2, #E2F6F2);
-    padding: 1rem;
-    overflow: hidden;    
-  }
-  
- 
-  .form-container {
-    background-color: rgba(24, 99, 67, 0.5); 
-    padding: 2rem;
-    border-radius: 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 1.5rem;
-    width: 20rem;
-    z-index: 1;            
-  }
-  
-  
-  .form-container h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #1F2937;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-  
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  input, select {
-    width: 100%;
-    padding: 0.75rem;
-    margin-top: 0.5rem;
-    border: 1px solid #D1D5DB;
-    border-radius: 0.5rem;
-    font-size: 1rem;
-  }
-  
-  /* Botón */
-  button {
-    width: 100%;
-    margin-top: 1rem;
-    background-color: #047857;
-    color: white;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    font-size: 1.125rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #065F46;
-  }
-  
+body, html {
+  height: 100%;          
+  overflow: hidden; /* Elimina el scroll */
+}
+
+.welcome-image {
+  width: 100%;        
+  height: auto;          
+  display: block;       
+  object-fit: cover;     
+  max-height: 100vh;
+  position: absolute; 
+  top: 0;           
+  left: 50%;          
+  transform: translateX(-50%); 
+}
+
+.Cardenal-image {
+  position: absolute;   
+  bottom: 0px;          
+  right: 0px;          
+  width: 25%;            
+  height: auto;         
+  object-fit: cover;    
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;      
+  background: linear-gradient(135deg, #E2F6F2, #E2F6F2);
+  padding: 15rem;
+  overflow: hidden; /* Asegura que no haya scroll */
+}
+
+.form-container {
+  background-color: rgba(24, 99, 67, 0.5); 
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 1.5rem;
+  width: 20rem;
+  z-index: 1;            
+}
+
+.form-container h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1F2937;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+input, select {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  border: 1px solid #D1D5DB;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+button {
+  width: 100%;
+  margin-top: 1rem;
+  background-color: #047857;
+  color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #065F46;
+}

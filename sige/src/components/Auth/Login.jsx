@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import './Login.css';
 import Logo from './img/Logo.png';
 import Cardenal from './img/Cardenal.png';
+import { useNavigate } from "react-router-dom"; // Importar useNavigate
 
 export default function Login() {
   const [roles, setRoles] = useState([]);
@@ -10,13 +11,15 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+  const navigate = useNavigate(); 
+
   // Cargar roles desde el backend
   useEffect(() => {
     fetch("http://localhost:5000/get-roles")
       .then(response => response.json())
       .then(data => {
         setRoles(data);
-        if (data.length > 0) setRole(data[0].nombre_rol); // Establecer un valor predeterminado
+        if (data.length > 0) setRole(data[0].nombre_rol); 
       })
       .catch(error => console.error("Error al cargar roles:", error));
   }, []);
@@ -36,7 +39,9 @@ export default function Login() {
       const data = await response.json();
       if (response.ok) {
         alert("Ingreso exitoso: " + data.message);
-        // Redirigir o realizar alguna acción luego del login exitoso
+
+        navigate("/home");
+      
       } else {
         setErrorMessage(data.message);
       }
