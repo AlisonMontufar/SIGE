@@ -1,94 +1,111 @@
-.inicio-administrador {
-  background-color: #cde8dc;
-  font-family: 'Arial', sans-serif;
+:root {
+  --primary-color: #2c6e49;
+  --primary-light: #4d9078;
+  --secondary-color: #f8f9fa;
+  --text-color: #333;
+  --text-light: #6c757d;
+  --white: #ffffff;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+
+/* Estructura principal */
+.admin-dashboard {
+  min-height: 100vh;
+  background-color: #f5f9f7;
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.admin-header {
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 2rem;
   text-align: center;
-  padding: 20px;
+  margin-bottom: 2rem;
 }
 
-.header {
-  background-color: #165b36;
-  color: white;
-  padding: 15px;
-  font-size: 1.2em;
+.admin-header h1 {
+  font-size: 2rem;
+  margin: 0;
+  font-weight: 600;
 }
 
-.contenedor {
-  background-color: #d0f0e0;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 900px;
+.welcome-message {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin: 0.5rem 0 0;
+}
+
+.admin-content {
+  max-width: 1000px;
   margin: 0 auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 0 1.5rem;
 }
 
-h1 {
-  color: #165b36;
+/* Menú de administración */
+.admin-menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
 }
 
-.info-profesor {
-  font-size: 1em;
-  margin-bottom: 10px;
+.admin-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.formulario {
+.menu-link {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.input-text, .input-select {
-  padding: 8px;
-  border: 1px solid #165b36;
-  border-radius: 4px;
-  font-size: 1em;
-}
-
-.btn-editar, .menu-item {
-  background-color: #165b36;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-  border-radius: 5px;
+  align-items: center;
+  background-color: var(--white);
+  color: var(--text-color);
   text-decoration: none;
-  display: inline-block;
-  font-size: 1.1em;
-  text-align: center;
-  margin: 10px 5px;
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  transition: var(--transition);
+  height: 100%;
+  border-left: 4px solid var(--primary-color);
 }
 
-.btn-editar:hover, .menu-item:hover {
-  background-color: #127a50;
+.menu-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  background-color: var(--primary-light);
+  color: var(--white);
 }
 
-.tabla-calificaciones {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
+.menu-icon {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-right: 1rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
 }
 
-.tabla-calificaciones th, .tabla-calificaciones td {
-  border: 1px solid #165b36;
-  padding: 8px;
+.menu-text {
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
-.input-tabla {
-  width: 100%;
-  padding: 5px;
-  border: 1px solid #165b36;
-}
-
-.btn-calificar {
-  background-color: #165b36;
-  color: white;
-  padding: 10px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  margin: 10px 5px;
-}
-
-.btn-calificar:hover {
-  background-color: #127a50;
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-menu {
+    grid-template-columns: 1fr;
+  }
+  
+  .admin-header {
+    padding: 1.5rem;
+  }
+  
+  .admin-header h1 {
+    font-size: 1.5rem;
+  }
 }
