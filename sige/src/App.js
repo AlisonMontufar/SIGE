@@ -32,7 +32,7 @@ function App() {
         
         {/* Rutas protegidas */}
         <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
-        <Route path="/HistorialAcademico" element={<PrivateRoute><EnvModCalificaciones /></PrivateRoute>} />
+        <Route path="/Calificaciones/Modificaciones" element={<PrivateRoute><EnvModCalificaciones /></PrivateRoute>} />
         
         {/* Rutas de administrador protegidas */}
         <Route path="/admin" element={<PrivateRoute><InicioAdministrador /></PrivateRoute>} />

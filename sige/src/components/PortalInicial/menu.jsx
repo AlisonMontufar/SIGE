@@ -49,7 +49,7 @@ function NavigationMenu() {
       <div className="nav-item">
         <button className="nav-button">📊 Calificaciones ▼</button>
         <ul className="dropdown-menu">
-          <li onClick={() => navigateTo('/calificaciones/envio-modificaciones')}>Envío y modificaciones</li>
+          <li onClick={() => navigateTo('/Calificaciones/Modificaciones')}>Envío y modificaciones</li>
           <li onClick={() => navigateTo('/calificaciones/desempeno-academico')}>Desempeño Académico</li>
         </ul>
       </div>
@@ -68,7 +68,7 @@ function NavigationMenu() {
       <div className="nav-item">
         {matricula ? (
           <>
-            <button onClick={() => navigateTo('/perfil')}>👤 Perfil: {matricula} ▼</button>
+            <button className='profile-button' onClick={() => navigateTo('/perfil')}>👤 Perfil: {matricula} ▼</button>
             <ul className="dropdown-menu">
               <li onClick={() => navigateTo('/perfil/configuracion')}>Ajustes</li>
               <li onClick={handleLogout}>Cerrar sesión</li>
