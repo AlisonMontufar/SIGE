@@ -22,10 +22,21 @@ export default function Login() {
         if (data.length > 0) setRole(data[0].nombre_rol); 
       })
       .catch(error => console.error("Error al cargar roles:", error));
-  }, []);
+
+    // Verificar si ya está autenticado
+    const authToken = localStorage.getItem("authToken");
+    if (authToken) {
+      navigate("/home");  // Redirige a home si ya está autenticado
+    }
+  }, [navigate]);
 
   const handleLogin = async () => {
-    const loginData = { matricula: user, contraseña: password };
+    if (!user || !password) {
+      setErrorMessage("Por favor ingrese su matrícula y contraseña.");
+      return;
+    }
+
+    const loginData = { matricula: user, contraseña: password, rol: role };
 
     try {
       const response = await fetch("http://localhost:5000/login", {
@@ -40,10 +51,13 @@ export default function Login() {
       if (response.ok) {
         alert("Ingreso exitoso: " + data.message);
 
+        // Guarda el token de autenticación en el localStorage
+        localStorage.setItem("authToken", data.token);
+
+        // Redirige a la página de home
         navigate("/home");
-      
       } else {
-        setErrorMessage(data.message);
+        setErrorMessage(data.message || "Error desconocido. Intente nuevamente.");
       }
     } catch (error) {
       setErrorMessage("Error en la autenticación");
@@ -53,8 +67,8 @@ export default function Login() {
 
   return (
     <div className="login-container">
-    <img src={Logo} className="welcome-image" alt="Logo" />
-    <img src={Cardenal} className="Cardenal-image" alt="Logo" />
+      <img src={Logo} className="welcome-image" alt="Logo" />
+      <img src={Cardenal} className="Cardenal-image" alt="Logo" />
       <div className="form-container">
         <h3>Ingrese Sus Datos:</h3>
 
@@ -89,10 +103,7 @@ export default function Login() {
         <button onClick={handleLogin}>
           Ingresar
         </button>
-
-       
       </div>
-     
     </div>
   );
 }

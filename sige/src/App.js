@@ -16,6 +16,8 @@ import AgregarActividadExtracurricular from './components/ActividadesExtracurric
 import GestionarActividadesExtracurriculares from './components/ActividadesExtracurriculares/GestionarActividadesExtracurriculares';
 import VerActividadExtracurricular from './components/ActividadesExtracurriculares/VerActividadExtracurricular'; // Nuevo componente
 
+import PrivateRoute from './components/Auth/PrivateRoute'; // Importar el componente de ruta privada
+
 function App() {
   return (
     <Router>
@@ -23,26 +25,24 @@ function App() {
         {/* Ruta para login */}
         <Route path="/" element={<Login />} />
         
-        {/* Ruta para el portal inicial */}
-        <Route path="/home" element={<Home />} />
+        {/* Rutas protegidas */}
+        <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
+        <Route path="/HistorialAcademico" element={<PrivateRoute><EnvModCalificaciones /></PrivateRoute>} />
         
-        {/* Ruta para el Historial Academico */}
-        <Route path="/HistorialAcademico" element={<EnvModCalificaciones />} />
+        {/* Rutas de administrador protegidas */}
+        <Route path="/admin" element={<PrivateRoute><InicioAdministrador /></PrivateRoute>} />
+        <Route path="/admin/agregar-encuesta" element={<PrivateRoute><AgregarEncuesta /></PrivateRoute>} />
+        <Route path="/admin/gestionar-encuestas" element={<PrivateRoute><GestionarEncuestas /></PrivateRoute>} />
         
-        {/* Rutas de administrador */}
-        <Route path="/admin" element={<InicioAdministrador />} />
-        <Route path="/admin/agregar-encuesta" element={<AgregarEncuesta />} />
-        <Route path="/admin/gestionar-encuestas" element={<GestionarEncuestas />} />
+        {/* Rutas de alumno protegidas */}
+        <Route path="/alumno" element={<PrivateRoute><InicioAlumno /></PrivateRoute>} />
+        <Route path="/alumno/encuesta/:id" element={<PrivateRoute><Encuesta /></PrivateRoute>} />
         
-        {/* Rutas de alumno */}
-        <Route path="/alumno" element={<InicioAlumno />} />
-        <Route path="/alumno/encuesta/:id" element={<Encuesta />} />
-        
-        {/* Rutas para Actividades Extracurriculares */}
-        <Route path="/admin/actividades" element={<InicioActividadesExtracurriculares />} />
-        <Route path="/admin/agregar-actividad" element={<AgregarActividadExtracurricular />} />
-        <Route path="/admin/gestionar-actividades" element={<GestionarActividadesExtracurriculares />} />
-        <Route path="/admin/actividad/:id" element={<VerActividadExtracurricular />} />
+        {/* Rutas para Actividades Extracurriculares protegidas */}
+        <Route path="/admin/actividades" element={<PrivateRoute><InicioActividadesExtracurriculares /></PrivateRoute>} />
+        <Route path="/admin/agregar-actividad" element={<PrivateRoute><AgregarActividadExtracurricular /></PrivateRoute>} />
+        <Route path="/admin/gestionar-actividades" element={<PrivateRoute><GestionarActividadesExtracurriculares /></PrivateRoute>} />
+        <Route path="/admin/actividad/:id" element={<PrivateRoute><VerActividadExtracurricular /></PrivateRoute>} />
       </Routes>
     </Router>
   );
