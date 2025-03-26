@@ -65,7 +65,25 @@ body {
   
   .Titulo-bienvenida {
     margin-bottom: 30px;
+    text-align: center; /* Centrar el texto */
+    padding: 10px;
+
   }
+  
+  .Titulo-bienvenida h1 {
+    font-size: 4rem; /* Aumentar el tamaño del texto principal */
+    color: #3d3d3d; /* Color oscuro */
+    margin: 0;
+    font-weight: 700; /* Negrita */
+  }
+  
+  .Titulo-bienvenida h3 {
+    font-size: 1.8rem; /* Aumentar el tamaño del subtítulo */
+    color: #666; /* Color gris claro */
+    font-weight: 400; /* Normal */
+    margin-top: 0px;
+  }
+  
   
   .container {
     display: flex;
@@ -180,3 +198,17 @@ body {
     height: auto;
     object-fit: contain;
   }
+
+  .facebook-page {
+    margin-top: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+
+  
+

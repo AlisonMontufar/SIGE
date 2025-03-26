@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './home.css';
 import Cardenal from './img/Cardenal.png';
@@ -13,6 +13,23 @@ import LogoUt from './img/image 35 (1).png';
 
 function Home() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Cargar el SDK de Facebook cuando el componente se monte
+    const loadFacebookSDK = () => {
+      if (window.FB) return; // Si ya se cargó, no hacemos nada
+      // Crear un script para cargar el SDK de Facebook
+      const script = document.createElement('script');
+      script.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v14.0';
+      script.async = true;
+      script.onload = () => {
+        window.FB.XFBML.parse(); // Esto inicializa el plugin después de que el SDK se haya cargado
+      };
+      document.body.appendChild(script);
+    };
+
+    loadFacebookSDK();
+  }, []);
 
   const navigateTo = (path) => {
     navigate(path);
@@ -71,8 +88,18 @@ function Home() {
 
       <div className="container">
         <div className="card-noticias">
-          <h1>Contenido del Card</h1>
-          <p>Este es un ejemplo de contenido dentro del card blanco.</p>
+          <div className="facebook-page">
+            <div className="fb-page"
+                 data-href="https://www.facebook.com/UTTTMx" // Reemplaza con tu página de Facebook
+                 data-tabs="timeline"
+                 data-width="400"
+                 data-height="450"
+                 data-small-header="false"
+                 data-adapt-container-width="true"
+                 data-hide-cover="false"
+                 data-show-facepile="true">
+            </div>
+          </div>
         </div>
       </div>
 
