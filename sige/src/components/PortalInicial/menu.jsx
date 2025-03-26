@@ -48,6 +48,7 @@ function NavigationMenu() {
         <button className="profile-button">👤 Perfil ▼</button>
         <ul className="dropdown-menu">
           <li onClick={() => navigateTo('/perfil/configuracion')}>Ajustes</li>
+          <li onClick={() => navigateTo('/perfil/configuracion')}>Cerrar Secion</li>
         </ul>
       </div>
     </div>
