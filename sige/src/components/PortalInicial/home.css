@@ -71,14 +71,14 @@ body {
   }
   
   .Titulo-bienvenida h1 {
-    font-size: 4rem; /* Aumentar el tamaño del texto principal */
+    font-size: 3rem; /* Aumentar el tamaño del texto principal */
     color: #3d3d3d; /* Color oscuro */
     margin: 0;
     font-weight: 700; /* Negrita */
   }
   
   .Titulo-bienvenida h3 {
-    font-size: 1.8rem; /* Aumentar el tamaño del subtítulo */
+    font-size: 2rem; /* Aumentar el tamaño del subtítulo */
     color: #666; /* Color gris claro */
     font-weight: 400; /* Normal */
     margin-top: 0px;
