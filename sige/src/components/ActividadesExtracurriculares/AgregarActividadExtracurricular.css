@@ -1,41 +1,215 @@
-.agregar-actividad-extracurricular {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+/* AgregarActividadExtracurricular.css - Versión con centro alargado */
+
+/* Estilos generales */
+.formulario-actividad {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2.5rem 3rem;
+  color: #333;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.encabezado {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+.encabezado h1 {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.encabezado p {
+  color: #7f8c8d;
+  font-size: 1.05rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Contenedor del formulario */
+form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Contenedor de campos (centro alargado) */
+.campos-formulario {
+  flex: 1;
+  margin-bottom: 2rem;
+}
+
+/* Estilos para secciones del formulario */
+.seccion {
+  margin-bottom: 1.8rem;
+}
+
+.seccion h2 {
+  font-size: 1.05rem;
+  color: #2c3e50;
+  margin-bottom: 0.7rem;
+  font-weight: 600;
+  position: relative;
+  padding-left: 1rem;
+}
+
+.seccion h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 16px;
+  background-color: #27ae60;
+  border-radius: 2px;
+}
+
+/* Campos de formulario */
+input, select, textarea {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #27ae60;
+  box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.15);
+  background-color: #fff;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Sección doble para fecha y horario */
+.seccion-doble {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 1.8rem;
+}
+
+.grupo {
+  width: 100%;
+}
+
+/* Estilos para errores */
+.error {
+  border-color: #e74c3c !important;
+  background-color: #fff5f5 !important;
+}
+
+.mensaje-error {
+  display: block;
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+/* Botones (centrados en la parte inferior) */
+.acciones {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  margin-top: auto; /* Empuja los botones hacia abajo */
+  border-top: 1px solid #eee;
+}
+
+.boton-primario, .boton-secundario {
+  padding: 0.9rem 2.2rem;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  min-width: 180px;
+  text-align: center;
+}
+
+.boton-primario {
+  background-color: #27ae60;
+  color: white;
+  box-shadow: 0 2px 4px rgba(39, 174, 96, 0.2);
+}
+
+.boton-primario:hover {
+  background-color: #219653;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(39, 174, 96, 0.3);
+}
+
+.boton-secundario {
+  background-color: transparent;
+  color: #7f8c8d;
+  border: 2px solid #ddd;
+}
+
+.boton-secundario:hover {
+  background-color: #f8f9fa;
+  border-color: #ccc;
+  color: #555;
+}
+
+/* Campos requeridos */
+h2::after {
+  content: '*';
+  color: #e74c3c;
+  margin-left: 0.3rem;
+  font-size: 0.9em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .formulario-actividad {
+    padding: 2rem;
+    margin: 1rem auto;
+    min-height: auto;
   }
   
-  .agregar-actividad-extracurricular h1 {
-    text-align: center;
-    margin-bottom: 20px;
+  .seccion-doble {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
   
-  .agregar-actividad-extracurricular form {
-    display: flex;
+  .acciones {
     flex-direction: column;
+    gap: 1rem;
   }
   
-  .agregar-actividad-extracurricular input,
-  .agregar-actividad-extracurricular textarea {
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+  .boton-primario, .boton-secundario {
+    width: 100%;
+    padding: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .formulario-actividad {
+    padding: 1.5rem;
+    box-shadow: none;
+    border-radius: 0;
+    margin: 0;
   }
   
-  .agregar-actividad-extracurricular button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
+  .encabezado h1 {
+    font-size: 1.7rem;
   }
-  
-  .agregar-actividad-extracurricular button:hover {
-    background-color: #45a049;
-  }
-  
+}

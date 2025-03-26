@@ -1,51 +1,118 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './GestionarActividadesExtracurriculares.css';
 
 const GestionarActividadesExtracurriculares = () => {
   const [actividades, setActividades] = useState([
-    { id: 1, nombre: 'Actividad de Voluntariado', descripcion: 'Descripción de la actividad' },
-    { id: 2, nombre: 'Evento Deportivo', descripcion: 'Descripción del evento' },
+    { 
+      id: 1, 
+      nombre: 'Voluntariado Comunitario', 
+      descripcion: 'Participación en programas de ayuda a la comunidad local',
+      categoria: 'Social',
+      fecha: '15 Nov 2023',
+      estado: 'Activa'
+    },
+    { 
+      id: 2, 
+      nombre: 'Torneo de Fútbol', 
+      descripcion: 'Competencia deportiva entre facultades',
+      categoria: 'Deportes',
+      fecha: '20 Nov 2023',
+      estado: 'Activa'
+    },
   ]);
 
-  const [confirmacionEliminacion, setConfirmacionEliminacion] = useState(null);
+  const [actividadAEliminar, setActividadAEliminar] = useState(null);
+  const [mostrarModal, setMostrarModal] = useState(false);
 
-  const eliminarActividad = (id) => {
-    setConfirmacionEliminacion(id);  // Guardamos la actividad que se quiere eliminar
+  const solicitarEliminacion = (id) => {
+    setActividadAEliminar(id);
+    setMostrarModal(true);
   };
 
-  const confirmarEliminacion = (id) => {
-    const actividadesActualizadas = actividades.filter((actividad) => actividad.id !== id);
-    setActividades(actividadesActualizadas);
-    setConfirmacionEliminacion(null);  // Limpiamos la confirmación
+  const confirmarEliminacion = () => {
+    setActividades(actividades.filter(a => a.id !== actividadAEliminar));
+    setMostrarModal(false);
   };
 
   const cancelarEliminacion = () => {
-    setConfirmacionEliminacion(null);  // Cancelamos la eliminación
+    setActividadAEliminar(null);
+    setMostrarModal(false);
   };
 
   return (
-    <div className="gestionar-actividades">
-      <h1>Gestionar Actividades Extracurriculares</h1>
-      
-      {/* Mensaje de confirmación de eliminación */}
-      {confirmacionEliminacion && (
-        <div className="confirmacion-eliminacion">
-          <p>¿Estás seguro de que deseas eliminar esta actividad?</p>
-          <button onClick={() => confirmarEliminacion(confirmacionEliminacion)}>Sí, Eliminar</button>
-          <button onClick={cancelarEliminacion}>Cancelar</button>
+    <div className="gestion-container">
+      <div className="gestion-header">
+        <h1>Gestión de Actividades Extracurriculares</h1>
+        <Link to="/admin/agregar-actividad" className="btn-agregar">
+          <i className="fas fa-plus"></i> Nueva Actividad
+        </Link>
+      </div>
+
+      <div className="actividades-list">
+        {actividades.length === 0 ? (
+          <div className="empty-state">
+            <p>No hay actividades registradas</p>
+            <Link to="/admin/agregar-actividad" className="btn-primary">
+              Crear primera actividad
+            </Link>
+          </div>
+        ) : (
+          actividades.map(actividad => (
+            <div key={actividad.id} className="actividad-card">
+              <div className="card-header">
+                <div className="card-badge">{actividad.categoria}</div>
+                <span className={`estado-badge ${actividad.estado.toLowerCase()}`}>
+                  {actividad.estado}
+                </span>
+              </div>
+              
+              <h2>{actividad.nombre}</h2>
+              <p className="descripcion">{actividad.descripcion}</p>
+              
+              <div className="card-meta">
+                <span><i className="fas fa-calendar-alt"></i> {actividad.fecha}</span>
+              </div>
+              
+              <div className="card-actions">
+                <Link 
+                  to={`/admin/editar-actividad/${actividad.id}`} 
+                  className="btn-editar"
+                >
+                  <i className="fas fa-edit"></i> Editar
+                </Link>
+                <button 
+                  onClick={() => solicitarEliminacion(actividad.id)} 
+                  className="btn-eliminar"
+                >
+                  <i className="fas fa-trash-alt"></i> Eliminar
+                </button>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* Modal de confirmación */}
+      {mostrarModal && (
+        <div className="modal-overlay">
+          <div className="modal-container">
+            <div className="modal-content">
+              <h3>Confirmar Eliminación</h3>
+              <p>¿Estás seguro que deseas eliminar esta actividad? Esta acción no se puede deshacer.</p>
+              
+              <div className="modal-actions">
+                <button onClick={cancelarEliminacion} className="btn-cancelar">
+                  Cancelar
+                </button>
+                <button onClick={confirmarEliminacion} className="btn-confirmar">
+                  Sí, Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
-      
-      <ul>
-        {actividades.map((actividad) => (
-          <li key={actividad.id} className="actividad-item">
-            <h2>{actividad.nombre}</h2>
-            <p>{actividad.descripcion}</p>
-            <button className="editar-btn">Editar</button>
-            <button className="eliminar-btn" onClick={() => eliminarActividad(actividad.id)}>Eliminar</button>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };
