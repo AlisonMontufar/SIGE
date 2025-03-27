@@ -311,6 +311,132 @@ app.post("/update-password", async (req, res) => {
 });
 
 
+// /*** TABLAS DE CALIFICACIONES */
+// app.get('/alumnos', async (req, res) => {
+//   try {
+//     const pool = await connectToDatabase();
+//     const result = await pool.request().query('SELECT * FROM Alumnos');
+//     res.json(result.recordset);
+//   } catch (error) {
+//     console.error('Error al obtener los alumnos:', error);
+//     res.status(500).json({ message: 'Error al obtener los alumnos', error });
+//   } finally {
+//     sql.close();
+//   }
+// });
+
+// app.get('/grupos', async (req, res) => {
+//   try {
+//     const pool = await connectToDatabase();
+//     const result = await pool.request().query('SELECT * FROM Grupos');
+//     res.json(result.recordset);
+//   } catch (error) {
+//     console.error('Error al obtener los grupos:', error);
+//     res.status(500).json({ message: 'Error al obtener los grupos', error });
+//   } finally {
+//     sql.close();
+//   }
+// });
+
+// /**
+//  * Obtener todos los maestros
+//  */
+// app.get('/maestros', async (req, res) => {
+//   try {
+//     const pool = await connectToDatabase();
+//     const result = await pool.request().query('SELECT * FROM Maestros');
+//     res.json(result.recordset);
+//   } catch (error) {
+//     console.error('Error al obtener los maestros:', error);
+//     res.status(500).json({ message: 'Error al obtener los maestros', error });
+//   } finally {
+//     sql.close();
+//   }
+// });
+
+// /**
+//  * Obtener todas las calificaciones
+//  */
+// app.get('/calificaciones', async (req, res) => {
+//   try {
+//     const pool = await connectToDatabase();
+//     const result = await pool.request().query('SELECT * FROM Calificaciones');
+//     res.json(result.recordset);
+//   } catch (error) {
+//     console.error('Error al obtener las calificaciones:', error);
+//     res.status(500).json({ message: 'Error al obtener las calificaciones', error });
+//   } finally {
+//     sql.close();
+//   }
+// });
+
+/**
+ * Endpoint para obtener las calificaciones del alumno
+ */
+app.get('/materias', async (req, res) => {
+  try {
+    const pool = await connectToDatabase();
+    const result = await pool.request().query('SELECT * FROM Materias');
+    res.json(result.recordset);
+  } catch (error) {
+    console.error('Error al obtener las materias:', error);
+    res.status(500).json({ message: 'Error al obtener las materias', error });
+  } finally {
+    sql.close();
+  }
+});
+
+app.get('/calificaciones/:matricula', async (req, res) => {
+  const { matricula } = req.params;
+
+  try {
+    const pool = await connectToDatabase();
+
+    const query = `
+      SELECT 
+        U.matricula,
+        A.alumno_id,
+        U.nombre,
+        C.calificacion_id,
+        C.unidad,
+        C.calificacion,
+        C.fecha,
+        C.calificacion_remedial,
+        C.calificacion_extraordinario,
+        C.accion,
+        C.asistencias,
+        M.materia_id,
+        M.nombre AS materia_nombre,
+        G.grupo_id,
+        G.nombre_grupo,
+        MA.maestro_id,
+        MA.nombre AS maestro_nombre
+      FROM Usuarios U
+      INNER JOIN Alumnos A ON U.usuario_id = A.usuario_id
+      INNER JOIN Calificaciones C ON A.alumno_id = C.alumno_id
+      INNER JOIN Materias M ON C.materia_id = M.materia_id
+      INNER JOIN Grupos G ON A.grupo_id = G.grupo_id
+      INNER JOIN Maestros MA ON G.maestro_id = MA.maestro_id
+      WHERE U.matricula = @matricula
+    `;
+
+    const result = await pool.request()
+      .input('matricula', sql.NVarChar, matricula)
+      .query(query);
+
+    if (result.recordset.length === 0) {
+      return res.status(404).json({ message: 'No se encontraron calificaciones para la matrícula proporcionada.' });
+    }
+
+    res.json(result.recordset);
+  } catch (error) {
+    console.error('Error al obtener las calificaciones:', error);
+    res.status(500).json({ message: 'Error al obtener las calificaciones', error });
+  } finally {
+    sql.close();
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
