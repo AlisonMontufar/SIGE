@@ -57,7 +57,7 @@ function NavigationMenu() {
     <button className="nav-button">📊 Calificaciones ▼</button>
     <ul className="dropdown-menu">
       <li onClick={() => navigateTo('/Calificaciones/Modificaciones')}>Envío y modificaciones</li>
-      <li onClick={() => navigateTo('/calificaciones/desempeno-academico')}>Desempeño Académico</li>
+      <li onClick={() => navigateTo('/Calificaciones/DesempeñoAcademico')}>Desempeño Académico</li>
     </ul>
   </div>
 )}

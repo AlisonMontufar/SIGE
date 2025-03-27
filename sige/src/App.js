@@ -9,6 +9,7 @@ import GestionarEncuestas from './components/Encuestas/Administrador/GestionarEn
 import InicioAlumno from './components/Encuestas/Alumno/InicioAlumno';
 import Encuesta from './components/Encuestas/Alumno/Encuesta';
 import EnvModCalificaciones from './components/HistorialAcademico/Env-Mod-calificaciones';
+import DesempenoAcademico from './components/HistorialAcademico/DesempeñoAcademico';
 
 // Importa las vistas de actividades extracurriculares
 import InicioActividadesExtracurriculares from './components/ActividadesExtracurriculares/InicioActividadesExtracurriculares';
@@ -30,9 +31,11 @@ function App() {
         {/* Ruta para login */}
         <Route path="/" element={<Login />} />
         
-        {/* Rutas protegidas */}
         <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
+        
+        {/* Rutas de Calificaiones protegidas */}
         <Route path="/Calificaciones/Modificaciones" element={<PrivateRoute><EnvModCalificaciones /></PrivateRoute>} />
+        <Route path="/Calificaciones/DesempeñoAcademico" element={<PrivateRoute><DesempenoAcademico /></PrivateRoute>} />
         
         {/* Rutas de administrador protegidas */}
         <Route path="/admin" element={<PrivateRoute><InicioAdministrador /></PrivateRoute>} />
