@@ -4,28 +4,24 @@ import './InicioActividadesExtracurriculares.css';
 
 const InicioActividadesExtracurriculares = () => {
   const [actividades, setActividades] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Datos de ejemplo (simulando API)
-    const actividadesData = [
-      { 
-        id: 1, 
-        nombre: 'Voluntariado Comunitario', 
-        descripcion: 'Participa en actividades de servicio a la comunidad',
-        categoria: 'Social',
-        fecha: '15 Nov 2023',
-        cupos: 20
-      },
-      { 
-        id: 2, 
-        nombre: 'Torneo de Fútbol Intercarreras', 
-        descripcion: 'Competencia deportiva entre facultades',
-        categoria: 'Deportes',
-        fecha: '20 Nov 2023',
-        cupos: 10
-      },
-    ];
-    setActividades(actividadesData);
+    const fetchActividades = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/actividades'); // Cambia el puerto si es necesario
+        const data = await response.json();
+        if (data.actividades) {
+          setActividades(data.actividades);
+        }
+      } catch (error) {
+        console.error('Error al cargar actividades:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchActividades();
   }, []);
 
   return (
@@ -36,7 +32,9 @@ const InicioActividadesExtracurriculares = () => {
       </header>
 
       <div className="actividades-content">
-        {actividades.length === 0 ? (
+        {loading ? (
+          <p>Cargando actividades...</p>
+        ) : actividades.length === 0 ? (
           <div className="empty-state">
             <p>No hay actividades disponibles actualmente</p>
             <Link to="/admin/agregar-actividad" className="btn-primary">
@@ -46,17 +44,17 @@ const InicioActividadesExtracurriculares = () => {
         ) : (
           <div className="actividades-grid">
             {actividades.map((actividad) => (
-              <div key={actividad.id} className="actividad-card">
+              <div key={actividad.id_actividad} className="actividad-card">
                 <div className="card-header">
-                  <span className="categoria-badge">{actividad.categoria}</span>
-                  <span className="cupos-info">{actividad.cupos} cupos</span>
+                  <span className="categoria-badge">{actividad.categoria || 'General'}</span>
+                  <span className="cupos-info">{actividad.cupos || 'N/D'} cupos</span>
                 </div>
                 <h2>{actividad.nombre}</h2>
                 <p className="descripcion">{actividad.descripcion}</p>
                 <div className="card-footer">
-                  <span className="fecha">{actividad.fecha}</span>
+                  <span className="fecha">{new Date(actividad.fecha).toLocaleDateString()}</span>
                   <Link 
-                    to={`/admin/actividad/${actividad.id}`} 
+                    to={`/admin/actividad/${actividad.id_actividad}`} 
                     className="btn-secondary"
                   >
                     Ver detalles
@@ -66,7 +64,6 @@ const InicioActividadesExtracurriculares = () => {
             ))}
           </div>
         )}
-
       </div>
     </div>
   );
