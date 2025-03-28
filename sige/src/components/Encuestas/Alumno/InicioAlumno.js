@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './InicioAlumno.css';
+import NavigationMenu from '../../PortalInicial/menu';  // Importa el componente NavigationMenu
 
 const InicioAlumno = () => {
   const [encuestas, setEncuestas] = useState([]);
@@ -34,6 +35,8 @@ const InicioAlumno = () => {
 
   return (
     <div className="alumno-container">
+      <NavigationMenu /> {/* Agrega el componente NavigationMenu aquí */}
+
       <header className="encuestas-header">
         <h1>Encuestas Disponibles</h1>
         <p>Tu opinión nos ayuda a mejorar</p>

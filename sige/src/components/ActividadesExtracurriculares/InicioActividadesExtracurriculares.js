@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './InicioActividadesExtracurriculares.css';
+import NavigationMenu from '../PortalInicial/menu';  // Importa el componente NavigationMenu
 
 const InicioActividadesExtracurriculares = () => {
   const [actividades, setActividades] = useState([]);
@@ -24,6 +25,8 @@ const InicioActividadesExtracurriculares = () => {
 
   return (
     <div className="actividades-container">
+      <NavigationMenu /> {/* Agrega el componente NavigationMenu aquí */}
+
       <header className="actividades-header">
         <h1>Actividades Extracurriculares</h1>
         <p className="subtitle">Participa en nuestras actividades formativas</p>
