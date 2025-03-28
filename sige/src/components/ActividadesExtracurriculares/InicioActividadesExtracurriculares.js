@@ -6,26 +6,20 @@ const InicioActividadesExtracurriculares = () => {
   const [actividades, setActividades] = useState([]);
 
   useEffect(() => {
-    // Datos de ejemplo (simulando API)
-    const actividadesData = [
-      { 
-        id: 1, 
-        nombre: 'Voluntariado Comunitario', 
-        descripcion: 'Participa en actividades de servicio a la comunidad',
-        categoria: 'Social',
-        fecha: '15 Nov 2023',
-        cupos: 20
-      },
-      { 
-        id: 2, 
-        nombre: 'Torneo de Fútbol Intercarreras', 
-        descripcion: 'Competencia deportiva entre facultades',
-        categoria: 'Deportes',
-        fecha: '20 Nov 2023',
-        cupos: 10
-      },
-    ];
-    setActividades(actividadesData);
+    // Llamar a la API para obtener las actividades
+    const fetchActividades = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/actividadesExtra');
+        const data = await response.json();
+        if (data.actividades) {
+          setActividades(data.actividades);
+        }
+      } catch (error) {
+        console.error('Error al cargar las actividades:', error);
+      }
+    };
+
+    fetchActividades();
   }, []);
 
   return (
@@ -46,17 +40,17 @@ const InicioActividadesExtracurriculares = () => {
         ) : (
           <div className="actividades-grid">
             {actividades.map((actividad) => (
-              <div key={actividad.id} className="actividad-card">
+              <div key={actividad.nombre} className="actividad-card">
                 <div className="card-header">
-                  <span className="categoria-badge">{actividad.categoria}</span>
-                  <span className="cupos-info">{actividad.cupos} cupos</span>
+                  {/* La API no tiene el campo "categoria", por lo que puedes eliminarlo o ajustarlo */}
+                  <span className="cupos-info">{actividad.cupos || 'Sin información de cupos'}</span>
                 </div>
-                <h2>{actividad.nombre}</h2>
+                <h2>{actividad.nombre_actividad}</h2>
                 <p className="descripcion">{actividad.descripcion}</p>
                 <div className="card-footer">
                   <span className="fecha">{actividad.fecha}</span>
                   <Link 
-                    to={`/admin/actividad/${actividad.id}`} 
+                    to={`/admin/actividad/${actividad.nombre_actividad}`} 
                     className="btn-secondary"
                   >
                     Ver detalles
@@ -66,7 +60,6 @@ const InicioActividadesExtracurriculares = () => {
             ))}
           </div>
         )}
-
       </div>
     </div>
   );

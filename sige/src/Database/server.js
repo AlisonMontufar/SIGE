@@ -65,93 +65,6 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.post('/insert-encuesta', async (req, res) => {
-  const { nombre, fecha_inicio, fecha_fin } = req.body;
-
-  try {
-    // Conectar a la base de datos
-    const pool = await connectToDatabase();
-
-    // Insertar los datos en la tabla Encuestas
-    const result = await pool.request()
-      .input('nombre', sql.NVarChar, nombre)
-      .input('fecha_inicio', sql.DateTime, fecha_inicio)
-      .input('fecha_fin', sql.DateTime, fecha_fin)
-      .query(`
-          INSERT INTO [dbo].[Encuestas] ([nombre], [fecha_inicio], [fecha_fin])
-          VALUES (@nombre, @fecha_inicio, @fecha_fin);
-        `);
-
-    res.status(201).json({
-      message: 'Encuesta insertada correctamente',
-      encuesta: { nombre, fecha_inicio, fecha_fin }
-    });
-  } catch (error) {
-    console.error('Error al insertar la encuesta:', error);
-    res.status(500).json({ message: 'Error al insertar la encuesta', error });
-  } finally {
-    sql.close();
-  }
-});
-
-app.post('/insert-pregunta', async (req, res) => {
-  const { encuesta_id, pregunta } = req.body;
-
-  try {
-    // Conectar a la base de datos
-    const pool = await connectToDatabase();
-
-    // Insertar los datos en la tabla Preguntas_Encuesta
-    const result = await pool.request()
-      .input('encuesta_id', sql.Int, encuesta_id)
-      .input('pregunta', sql.NVarChar, pregunta)
-      .query(`
-          INSERT INTO [dbo].[Preguntas_Encuesta] ([encuesta_id], [pregunta])
-          VALUES (@encuesta_id, @pregunta);
-        `);
-
-    res.status(201).json({
-      message: 'Pregunta insertada correctamente',
-      pregunta: { encuesta_id, pregunta }
-    });
-  } catch (error) {
-    console.error('Error al insertar la pregunta:', error);
-    res.status(500).json({ message: 'Error al insertar la pregunta', error });
-  } finally {
-    sql.close();
-  }
-});
-
-app.post('/insert-respuesta', async (req, res) => {
-  const { encuesta_id, usuario_id, pregunta_id, respuesta } = req.body;
-
-  try {
-    // Conectar a la base de datos
-    const pool = await connectToDatabase();
-
-    // Insertar los datos en la tabla Respuestas_Encuesta
-    const result = await pool.request()
-      .input('encuesta_id', sql.Int, encuesta_id)
-      .input('usuario_id', sql.Int, usuario_id)
-      .input('pregunta_id', sql.Int, pregunta_id)
-      .input('respuesta', sql.NVarChar, respuesta)
-      .query(`
-          INSERT INTO [dbo].[Respuestas_Encuesta] ([encuesta_id], [usuario_id], [pregunta_id], [respuesta])
-          VALUES (@encuesta_id, @usuario_id, @pregunta_id, @respuesta);
-        `);
-
-    res.status(201).json({
-      message: 'Respuesta insertada correctamente',
-      respuesta: { encuesta_id, usuario_id, pregunta_id, respuesta }
-    });
-  } catch (error) {
-    console.error('Error al insertar la respuesta:', error);
-    res.status(500).json({ message: 'Error al insertar la respuesta', error });
-  } finally {
-    sql.close();
-  }
-});
-
 // Llamar todas las encuestas
 app.get('/encuestas', async (req, res) => {
   try {
@@ -171,41 +84,24 @@ app.get('/encuestas', async (req, res) => {
   }
 });
 
-
-
-app.get('/get-preguntas/:encuesta_id', async (req, res) => {
-  const { encuesta_id } = req.params;
-
+// Llamar todas las actividades extracurriculares
+app.get('/actividadesExtra', async (req, res) => {
   try {
     const pool = await connectToDatabase();
     const result = await pool.request()
-      .input('encuesta_id', sql.Int, encuesta_id)
-      .query('SELECT TOP (1000) [pregunta_id], [encuesta_id], [pregunta] FROM [dbo].[Preguntas_Encuesta] WHERE [encuesta_id] = @encuesta_id');
-    res.json(result.recordset);
+      .query('SELECT nombre_actividad, descripcion, fecha FROM Actividades_Extracurriculares');
+
+    res.json({
+      message: 'Actividades extracurriculares obtenidas correctamente',
+      actividades: result.recordset,
+    });
   } catch (error) {
-    console.error('Error al obtener las preguntas:', error);
-    res.status(500).json({ message: 'Error al obtener las preguntas', error });
+    console.error('Error al obtener las actividades extracurriculares:', error);
+    res.status(500).json({ message: 'Error al obtener las actividades extracurriculares', error });
   } finally {
     sql.close();
   }
 });
-app.get('/get-respuestas/:encuesta_id', async (req, res) => {
-  const { encuesta_id } = req.params;
-
-  try {
-    const pool = await connectToDatabase();
-    const result = await pool.request()
-      .input('encuesta_id', sql.Int, encuesta_id)
-      .query('SELECT TOP (1000) [respuesta_id], [encuesta_id], [usuario_id], [pregunta_id], [respuesta] FROM [dbo].[Respuestas_Encuesta] WHERE [encuesta_id] = @encuesta_id');
-    res.json(result.recordset);
-  } catch (error) {
-    console.error('Error al obtener las respuestas:', error);
-    res.status(500).json({ message: 'Error al obtener las respuestas', error });
-  } finally {
-    sql.close();
-  }
-});
-
 
 
 /** 📌 GET - Obtener perfil de usuario */
@@ -236,7 +132,7 @@ app.get("/get-perfil/:matricula", async (req, res) => {
   }
 });
 
-
+// Actualizar Perfil 
 app.put("/update-perfil", async (req, res) => {
   const { matricula, direccion, telefonoCasa, telefonoCelular, correoPersonal, correoInstitucional } = req.body;
 
@@ -277,7 +173,6 @@ app.put("/update-perfil", async (req, res) => {
     res.status(500).json({ message: "Error al actualizar el perfil" });
   }
 });
-
 
 /** 📌 POST - Cambiar contraseña */
 app.post("/update-password", async (req, res) => {
@@ -385,7 +280,7 @@ app.post("/update-password", async (req, res) => {
 app.get('/materias', async (req, res) => {
   try {
     const pool = await connectToDatabase();
-    const result = await pool.request().query('SELECT nombre FROM Materias');
+    const result = await pool.request().query('SELECT * FROM Materias');
     res.json(result.recordset);
   } catch (error) {
     console.error('Error al obtener las materias:', error);
@@ -445,91 +340,6 @@ app.get('/calificaciones/:matricula', async (req, res) => {
     sql.close();
   }
 });
-
-
-app.get('/ModificarCalificaciones/:matricula', async (req, res) => {
-  const matricula = req.params.matricula;
-
-  try {
-    const pool = await connectToDatabase();
-    const query = `
-      SELECT 
-        U.usuario_id AS profesor_id,
-        U.nombre AS profesor,
-        U.matricula AS profesor_matricula,
-        G.grupo_id,
-        G.nombre_grupo,
-        A.alumno_id,
-        A.usuario_id AS alumno_usuario_id,
-        UA.nombre AS alumno_nombre,
-        M.materia_id,
-        M.nombre AS materia,
-        C.calificacion_id,
-        C.unidad,
-        C.calificacion,
-        C.fecha,
-        C.calificacion_remedial,
-        C.calificacion_extraordinario,
-        C.accion,
-        C.asistencias
-      FROM Usuarios U
-      INNER JOIN Maestros Mtro ON U.usuario_id = Mtro.idusuarios
-      INNER JOIN Grupos G ON Mtro.maestro_id = G.maestro_id
-      INNER JOIN Alumnos A ON G.grupo_id = A.grupo_id
-      INNER JOIN Usuarios UA ON A.usuario_id = UA.usuario_id
-      INNER JOIN Materias M ON G.grupo_id = M.alumno_id
-      INNER JOIN Calificaciones C ON A.alumno_id = C.alumno_id AND M.materia_id = C.materia_id
-      WHERE U.matricula = @matricula;
-    `;
-    const result = await pool.request()
-      .input('matricula', sql.Int, matricula) // Asegúrate de usar el tipo de dato correcto según tu base de datos
-      .query(query);
-
-    res.json(result.recordset);
-  } catch (error) {
-    console.error('Error al obtener los datos:', error);
-    res.status(500).json({ message: 'Error al obtener los datos', error });
-  } finally {
-    sql.close();
-  }
-});
-
-app.post('/GuardarCalificaciones', async (req, res) => {
-  const calificacionesEditadas = req.body; // Datos de la tabla modificada en el frontend
-
-  try {
-    const pool = await connectToDatabase();
-
-    for (const calificacion of calificacionesEditadas) {
-      const query = `
-        UPDATE Calificaciones
-        SET 
-          calificacion = @calificacion,
-          calificacion_remedial = @calificacion_remedial,
-          calificacion_extraordinario = @calificacion_extraordinario,
-          asistencias = @asistencias
-        WHERE 
-          calificacion_id = @calificacion_id;
-      `;
-
-      await pool.request()
-        .input('calificacion_id', sql.Int, calificacion.calificacion_id)
-        .input('calificacion', sql.Decimal(5, 2), calificacion.calificacionEditada || null)
-        .input('calificacion_remedial', sql.Decimal(5, 2), calificacion.calificacionRemedialEditada || null)
-        .input('calificacion_extraordinario', sql.Decimal(5, 2), calificacion.calificacion_extraordinario || null)
-        .input('asistencias', sql.Int, calificacion.asistenciasEditadas || null)
-        .query(query);
-    }
-
-    res.json({ success: true, message: 'Calificaciones actualizadas correctamente' });
-  } catch (error) {
-    console.error('Error al actualizar las calificaciones:', error);
-    res.status(500).json({ success: false, message: 'Error al actualizar las calificaciones', error });
-  } finally {
-    sql.close();
-  }
-});
-
 
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
