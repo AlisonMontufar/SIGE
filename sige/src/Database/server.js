@@ -385,7 +385,7 @@ app.post("/update-password", async (req, res) => {
 app.get('/materias', async (req, res) => {
   try {
     const pool = await connectToDatabase();
-    const result = await pool.request().query('SELECT * FROM Materias');
+    const result = await pool.request().query('SELECT nombre FROM Materias');
     res.json(result.recordset);
   } catch (error) {
     console.error('Error al obtener las materias:', error);
@@ -441,6 +441,90 @@ app.get('/calificaciones/:matricula', async (req, res) => {
   } catch (error) {
     console.error('Error al obtener las calificaciones:', error);
     res.status(500).json({ message: 'Error al obtener las calificaciones', error });
+  } finally {
+    sql.close();
+  }
+});
+
+
+app.get('/ModificarCalificaciones/:matricula', async (req, res) => {
+  const matricula = req.params.matricula;
+
+  try {
+    const pool = await connectToDatabase();
+    const query = `
+      SELECT 
+        U.usuario_id AS profesor_id,
+        U.nombre AS profesor,
+        U.matricula AS profesor_matricula,
+        G.grupo_id,
+        G.nombre_grupo,
+        A.alumno_id,
+        A.usuario_id AS alumno_usuario_id,
+        UA.nombre AS alumno_nombre,
+        M.materia_id,
+        M.nombre AS materia,
+        C.calificacion_id,
+        C.unidad,
+        C.calificacion,
+        C.fecha,
+        C.calificacion_remedial,
+        C.calificacion_extraordinario,
+        C.accion,
+        C.asistencias
+      FROM Usuarios U
+      INNER JOIN Maestros Mtro ON U.usuario_id = Mtro.idusuarios
+      INNER JOIN Grupos G ON Mtro.maestro_id = G.maestro_id
+      INNER JOIN Alumnos A ON G.grupo_id = A.grupo_id
+      INNER JOIN Usuarios UA ON A.usuario_id = UA.usuario_id
+      INNER JOIN Materias M ON G.grupo_id = M.alumno_id
+      INNER JOIN Calificaciones C ON A.alumno_id = C.alumno_id AND M.materia_id = C.materia_id
+      WHERE U.matricula = @matricula;
+    `;
+    const result = await pool.request()
+      .input('matricula', sql.Int, matricula) // Asegúrate de usar el tipo de dato correcto según tu base de datos
+      .query(query);
+
+    res.json(result.recordset);
+  } catch (error) {
+    console.error('Error al obtener los datos:', error);
+    res.status(500).json({ message: 'Error al obtener los datos', error });
+  } finally {
+    sql.close();
+  }
+});
+
+app.post('/GuardarCalificaciones', async (req, res) => {
+  const calificacionesEditadas = req.body; // Datos de la tabla modificada en el frontend
+
+  try {
+    const pool = await connectToDatabase();
+
+    for (const calificacion of calificacionesEditadas) {
+      const query = `
+        UPDATE Calificaciones
+        SET 
+          calificacion = @calificacion,
+          calificacion_remedial = @calificacion_remedial,
+          calificacion_extraordinario = @calificacion_extraordinario,
+          asistencias = @asistencias
+        WHERE 
+          calificacion_id = @calificacion_id;
+      `;
+
+      await pool.request()
+        .input('calificacion_id', sql.Int, calificacion.calificacion_id)
+        .input('calificacion', sql.Decimal(5, 2), calificacion.calificacionEditada || null)
+        .input('calificacion_remedial', sql.Decimal(5, 2), calificacion.calificacionRemedialEditada || null)
+        .input('calificacion_extraordinario', sql.Decimal(5, 2), calificacion.calificacion_extraordinario || null)
+        .input('asistencias', sql.Int, calificacion.asistenciasEditadas || null)
+        .query(query);
+    }
+
+    res.json({ success: true, message: 'Calificaciones actualizadas correctamente' });
+  } catch (error) {
+    console.error('Error al actualizar las calificaciones:', error);
+    res.status(500).json({ success: false, message: 'Error al actualizar las calificaciones', error });
   } finally {
     sql.close();
   }
