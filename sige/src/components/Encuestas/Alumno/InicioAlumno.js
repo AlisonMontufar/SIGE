@@ -8,7 +8,7 @@ const InicioAlumno = () => {
   useEffect(() => {
     const obtenerEncuestas = async () => {
       try {
-        const response = await fetch('http://localhost:3000/encuestas'); // Cambia el puerto si tu API usa otro
+        const response = await fetch('http://localhost:5000/encuestas'); // Cambia el puerto si tu API usa otro
         const data = await response.json();
 
         // Adaptar estructura para la vista

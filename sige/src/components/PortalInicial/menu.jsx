@@ -39,7 +39,6 @@ function NavigationMenu() {
       <div className="nav-item">
         <button className="nav-button">📄 Eventos ▼</button>
         <ul className="dropdown-menu">
-          <li onClick={() => navigateTo('/admin/gestionar-actividades')}>Gestionar Eventos</li>
           <li onClick={() => navigateTo('/eventosAcademicos')}>Eventos Académicos</li>
         </ul>
       </div>
@@ -47,7 +46,6 @@ function NavigationMenu() {
       <div className="nav-item">
         <button className="nav-button">📄 Encuestas ▼</button>
         <ul className="dropdown-menu">
-          <li onClick={() => navigateTo('/admin')}>Administrar Encuestas</li>
           <li onClick={() => navigateTo('/alumno')}>Ver Encuestas</li>
         </ul>
       </div>
