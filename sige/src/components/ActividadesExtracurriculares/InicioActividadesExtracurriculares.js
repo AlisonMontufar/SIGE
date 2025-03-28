@@ -43,21 +43,25 @@ const InicioActividadesExtracurriculares = () => {
         ) : (
           <div className="actividades-grid">
             {actividades.map((actividad) => (
-              <div key={actividad.nombre} className="actividad-card">
+              <div key={actividad.actividad_id} className="actividad-card">
                 <div className="card-header">
                   {/* La API no tiene el campo "categoria", por lo que puedes eliminarlo o ajustarlo */}
                   <span className="cupos-info">{actividad.cupos || 'Sin información de cupos'}</span>
                 </div>
                 <h2>{actividad.nombre_actividad}</h2>
                 <p className="descripcion">{actividad.descripcion}</p>
+
+                {/* Agregar ID oculto */}
+                <input type="hidden" value={actividad.actividad_id} className="actividad-id" />
+
                 <div className="card-footer">
                   <span className="fecha">{actividad.fecha}</span>
-                  <Link 
-                    to={`/admin/actividad/${actividad.nombre_actividad}`} 
-                    className="btn-secondary"
-                  >
+                  <Link to={`/eventosAcademicos/${actividad.actividad_id}`} className="btn-secondary">
                     Ver detalles
                   </Link>
+
+
+
                 </div>
               </div>
             ))}

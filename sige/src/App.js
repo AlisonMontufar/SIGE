@@ -50,7 +50,7 @@ function App() {
         <Route path="/eventosAcademicos" element={<PrivateRoute><InicioActividadesExtracurriculares /></PrivateRoute>} />
         <Route path="/admin/agregar-actividad" element={<PrivateRoute><AgregarActividadExtracurricular /></PrivateRoute>} />
         <Route path="/admin/gestionar-actividades" element={<PrivateRoute><GestionarActividadesExtracurriculares /></PrivateRoute>} />
-        <Route path="/admin/actividad/:id" element={<PrivateRoute><VerActividadExtracurricular /></PrivateRoute>} />
+        <Route path="/eventosAcademicos/:id" element={<PrivateRoute><VerActividadExtracurricular /></PrivateRoute>} />
 
         <Route path="/calendario" element={<Calendario />} />
         <Route path="/calificaciones" element={<Calificaciones />} />

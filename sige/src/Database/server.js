@@ -126,13 +126,12 @@ app.get('/encuesta/:nombre/preguntas', async (req, res) => {
   }
 });
 
-
 // Llamar todas las actividades extracurriculares
 app.get('/actividadesExtra', async (req, res) => {
   try {
     const pool = await connectToDatabase();
     const result = await pool.request()
-      .query('SELECT nombre_actividad, descripcion, fecha FROM Actividades_Extracurriculares');
+      .query('SELECT actividad_id, nombre_actividad, descripcion, fecha FROM Actividades_Extracurriculares');
 
     res.json({
       message: 'Actividades extracurriculares obtenidas correctamente',
@@ -141,6 +140,42 @@ app.get('/actividadesExtra', async (req, res) => {
   } catch (error) {
     console.error('Error al obtener las actividades extracurriculares:', error);
     res.status(500).json({ message: 'Error al obtener las actividades extracurriculares', error });
+  } finally {
+    sql.close();
+  }
+});
+
+// Informacion de lasactividades extracurriculares
+app.get('/actividadesExtra/:actividad_id', async (req, res) => {
+  const actividadId = req.params.actividad_id;  // Obtener el id de la actividad de los parámetros de la URL
+  
+  try {
+    const pool = await connectToDatabase();
+    const result = await pool.request()
+      .input('actividad_id', sql.Int, actividadId)  // Pasar el parámetro de actividad_id de manera segura
+      .query(`
+        SELECT  
+            i.info_id,
+            i.actividad_id,
+            i.descripcion,
+            i.premios,
+            i.fecha
+        FROM 
+            info_ActiExtra i
+        INNER JOIN 
+            Actividades_Extracurriculares a
+        ON i.actividad_id = a.actividad_id
+        WHERE 
+            a.actividad_id = @actividad_id
+      `);
+
+    res.json({
+      message: 'Información de actividad extracurricular obtenida correctamente',
+      actividadesExtra: result.recordset,
+    });
+  } catch (error) {
+    console.error('Error al obtener la información de actividades extracurriculares:', error);
+    res.status(500).json({ message: 'Error al obtener la información de actividades extracurriculares', error });
   } finally {
     sql.close();
   }
