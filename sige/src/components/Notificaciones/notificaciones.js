@@ -10,7 +10,7 @@ function Notifications() {
         <li>Notificación 1</li>
         <li>Notificación 2</li>
         <li>Notificación 3</li>
-        {/* Puedes agregar más notificaciones aquí */}
+
       </ul>
     </div>
   );

@@ -51,10 +51,15 @@ export default function Login() {
       if (response.ok) {
         alert("Ingreso exitoso: " + data.message);
 
-       
-        localStorage.setItem("authToken", data.token);
+        // Usamos el token estático aquí
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkVtbWFudWVsbCBDYWx2YSBPY2FtcG8iLCJyb2wiOjF9.S-s1Lkm51xsOGwDmhjH9VhbiYtrdyCzj1OewIjqLqqg';
+        
+        // Guardamos el token en el localStorage
+        localStorage.setItem("authToken", token);
         localStorage.setItem("userMatricula", user); 
         localStorage.setItem("userRole", role); // Guarda el rol también
+
+        console.log("Token", token);  // Ver en consola el token recibido
 
         // Redirige a la página de home
         navigate("/home");
