@@ -9,19 +9,19 @@ const InicioAlumno = () => {
   useEffect(() => {
     const obtenerEncuestas = async () => {
       try {
-        const response = await fetch('http://localhost:5000/encuestas'); // Cambia el puerto si tu API usa otro
+        const response = await fetch('http://localhost:5000/encuestas'); // Ajusta el puerto si es necesario
         const data = await response.json();
 
         // Adaptar estructura para la vista
         const encuestasAdaptadas = data.encuestas.map((item, index) => ({
-          id: index + 1, // o usa un ID real si lo tienes
+          id: index + 1, // O usa un ID real si lo tienes
           titulo: item.nombre,
           descripcion: item.descripcion,
           preguntas: item.cantidad_preguntas,
           fecha: `Disponible hasta ${new Date(item.fecha_fin).toLocaleDateString('es-MX', {
             day: '2-digit', month: 'short', year: 'numeric'
           })}`,
-          estado: 'Disponible', // Aquí puedes hacer lógica según la fecha
+          estado: 'Disponible', // Aquí puedes agregar lógica según la fecha
         }));
 
         setEncuestas(encuestasAdaptadas);
@@ -36,12 +36,10 @@ const InicioAlumno = () => {
   return (
     <div className="alumno-container">
       <NavigationMenu /> {/* Agrega el componente NavigationMenu aquí */}
-
       <header className="encuestas-header">
         <h1>Encuestas Disponibles</h1>
         <p>Tu opinión nos ayuda a mejorar</p>
       </header>
-
       <div className="encuestas-list">
         {encuestas.map((encuesta) => (
           <article key={encuesta.id} className="encuesta-card">
@@ -57,8 +55,9 @@ const InicioAlumno = () => {
                 <span>{encuesta.fecha}</span>
               </div>
             </div>
+            {/* Usamos el nombre de la encuesta en la URL con encodeURIComponent */}
             <Link 
-              to={`/alumno/encuesta/${encuesta.id}`} 
+              to={`/alumno/encuesta/${encodeURIComponent(encuesta.titulo)}`}  
               className="action-button"
             >
               Comenzar

@@ -84,6 +84,49 @@ app.get('/encuestas', async (req, res) => {
   }
 });
 
+// Llamar preguntas de una encuesta por nombre
+app.get('/encuesta/:nombre/preguntas', async (req, res) => {
+  const nombreEncuesta = req.params.nombre;
+  console.log('Nombre de la encuesta recibido:', nombreEncuesta); // Verifica que se reciba el nombre correctamente
+
+  try {
+    const pool = await connectToDatabase();
+    const result = await pool.request()
+      .input('nombreEncuesta', sql.NVarChar, nombreEncuesta)
+      .query(`
+        SELECT 
+          pe.pregunta_id, 
+          pe.pregunta, 
+          pe.tipo_pregunta
+        FROM 
+          [dbo].[Preguntas_Encuesta] pe
+        INNER JOIN 
+          [dbo].[Encuestas] e ON pe.encuesta_id = e.encuesta_id
+        WHERE 
+          UPPER(e.nombre) = UPPER(@nombreEncuesta)
+      `);
+
+    console.log('Resultado de la consulta:', result.recordset); // Verifica lo que devuelve la consulta
+
+    if (result.recordset.length === 0) {
+      return res.status(404).json({
+        message: 'No se encontraron preguntas para esta encuesta',
+      });
+    }
+
+    res.json({
+      message: 'Preguntas obtenidas correctamente',
+      preguntas: result.recordset,
+    });
+  } catch (error) {
+    console.error('Error al obtener las preguntas:', error);
+    res.status(500).json({ message: 'Error al obtener las preguntas', error });
+  } finally {
+    sql.close();
+  }
+});
+
+
 // Llamar todas las actividades extracurriculares
 app.get('/actividadesExtra', async (req, res) => {
   try {

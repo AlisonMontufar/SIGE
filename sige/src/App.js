@@ -44,8 +44,8 @@ function App() {
         
         {/* Rutas de alumno protegidas */}
         <Route path="/alumno" element={<PrivateRoute><InicioAlumno /></PrivateRoute>} />
-        <Route path="/alumno/encuesta/:id" element={<PrivateRoute><Encuesta /></PrivateRoute>} />
-        
+        <Route path="/alumno/encuesta/:nombre" element={<PrivateRoute><Encuesta /></PrivateRoute>} />
+
         {/* Rutas para Actividades Extracurriculares protegidas */}
         <Route path="/eventosAcademicos" element={<PrivateRoute><InicioActividadesExtracurriculares /></PrivateRoute>} />
         <Route path="/admin/agregar-actividad" element={<PrivateRoute><AgregarActividadExtracurricular /></PrivateRoute>} />
