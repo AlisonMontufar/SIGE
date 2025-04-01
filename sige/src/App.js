@@ -20,6 +20,7 @@ import VerActividadExtracurricular from './components/ActividadesExtracurricular
 import Calendario from './components/HorariosCalificaciones/Calendario';
 import Calificaciones from './components/HorariosCalificaciones/Calificaciones'; 
 import Perfil from './components/PerfilPersonal/Profile'; 
+import Horario from './components/HorariosCalificaciones/Horario'; 
 
 import PrivateRoute from './components/Auth/PrivateRoute'; // Importar el componente de ruta privada
 
@@ -52,6 +53,7 @@ function App() {
         <Route path="/calendario" element={<Calendario />} />
         <Route path="/calificaciones" element={<Calificaciones />} />
         <Route path="/perfil" element={<Perfil />} />
+        <Route path="/horario" element={<Horario />} />
 
 
 

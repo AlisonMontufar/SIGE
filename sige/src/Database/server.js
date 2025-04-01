@@ -310,6 +310,57 @@ app.post("/update-password", async (req, res) => {
   }
 });
 
+app.get("/api/horarios/:matricula", async (req, res) => {
+  const { matricula } = req.params;
+
+  try {
+    const pool = await connectToDatabase();
+
+    const result = await pool.request()
+      .input("matricula", sql.NVarChar, matricula)
+      .query(`
+        SELECT 
+          h.dia_semana,               -- Corregido a la columna correcta
+          h.hora_inicio, 
+          h.hora_fin, 
+          h.aula, 
+          m.nombre AS materia, 
+          m.codigo
+        FROM Horario h
+        INNER JOIN Materias m ON h.materia_id = m.materia_id
+        INNER JOIN Alumnos a ON m.alumno_id = a.alumno_id   -- Nueva relación
+        INNER JOIN Usuarios u ON a.usuario_id = u.usuario_id
+        WHERE u.matricula = @matricula
+        ORDER BY 
+          CASE 
+            WHEN h.dia_semana = 'Lunes' THEN 1
+            WHEN h.dia_semana = 'Martes' THEN 2
+            WHEN h.dia_semana = 'Miércoles' THEN 3
+            WHEN h.dia_semana = 'Jueves' THEN 4
+            WHEN h.dia_semana = 'Viernes' THEN 5
+            ELSE 6
+          END, 
+          h.hora_inicio
+      `);
+
+    console.log("RESULTADO:", result.recordset);
+
+    if (!result.recordset || result.recordset.length === 0) {
+      console.log("No se encontraron horarios para la matrícula:", matricula);
+      return res.status(404).json({ message: "No se encontraron horarios" });
+    }
+
+    res.json(result.recordset);
+
+  } catch (error) {
+    console.error("Error en la consulta:", error);
+    res.status(500).json({ message: "Error en el servidor", error: error.message });
+  }
+});
+
+
+
+
 
 
 app.listen(port, () => {

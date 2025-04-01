@@ -62,7 +62,7 @@ function NavigationMenu() {
       <div className="nav-item">
         <button className="nav-button">📅 Calendario/Horarios ▼</button>
         <ul className="dropdown-menu">
-          <li onClick={() => navigateTo('/horarios')}>Horarios</li>
+          <li onClick={() => navigateTo('/horario')}>Horarios</li>
           <li onClick={() => navigateTo('/calificaciones')}>Calificaciones</li>
           <li onClick={() => navigateTo('/calendario')}>Calendario</li>
         </ul>
