@@ -11,10 +11,10 @@
 
 .agregar-encuesta {
   font-family: 'Inter', 'Roboto', 'Segoe UI', sans-serif;
-  max-width: 500px; /* Reducido el ancho */
-  margin: 100px auto; /* Aumentado el margen superior para bajar el contenedor */
+  max-width: 500px;
+  margin: 100px auto;
   padding: 2rem;
-  background-color: var(--white); /* Cambiado a blanco para que contraste con el fondo */
+  background-color: var(--white);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
 }
@@ -30,7 +30,7 @@
   margin-bottom: 1rem;
 }
 
-.form-group input, 
+.form-group input,
 .form-group select {
   width: 100%;
   padding: 0.75rem;
@@ -40,7 +40,7 @@
   transition: all 0.3s ease;
 }
 
-.form-group input:focus, 
+.form-group input:focus,
 .form-group select:focus {
   outline: none;
   border-color: var(--primary-color);
@@ -55,7 +55,7 @@
   box-shadow: var(--box-shadow);
 }
 
-.agregar-pregunta, 
+.agregar-pregunta,
 .crear-encuesta {
   display: block;
   width: 100%;
@@ -71,7 +71,7 @@
   margin-top: 1rem;
 }
 
-.agregar-pregunta:hover, 
+.agregar-pregunta:hover,
 .crear-encuesta:hover {
   background-color: var(--secondary-color);
 }
@@ -102,4 +102,24 @@
 
 .eliminar-pregunta:hover {
   background-color: #c82333;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+.agregar-encuesta {
+  height: 100%;
+  overflow-y: auto;  /* Permite desplazamiento vertical */
+}
+
+.formulario-scroll {
+  margin-bottom: 50px;
+}
+
+.preguntas-lista {
+  max-height: 400px;
+  overflow-y: auto;
 }

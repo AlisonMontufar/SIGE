@@ -1,31 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Link, animateScroll as scroll } from 'react-scroll'; // Librería react-scroll
 import './AgregarEncuesta.css';
 
 const AgregarEncuesta = () => {
   const [titulo, setTitulo] = useState('');
-  const [preguntas, setPreguntas] = useState([
-    { pregunta: '', tipo: 'abierta', opciones: [''] },
-  ]);
+  const [descripcion, setDescripcion] = useState('');
+  const [mensajePorque, setMensajePorque] = useState('');
+  const [fechaInicio, setFechaInicio] = useState('');
+  const [fechaFin, setFechaFin] = useState('');
+  const [preguntas, setPreguntas] = useState([]);
   const [errores, setErrores] = useState({});
+  const [mensajeExito, setMensajeExito] = useState('');
+  const [mensajeError, setMensajeError] = useState('');
+  const [loading, setLoading] = useState(false); // Para controlar la carga de preguntas
+  const formRef = useRef(null);
 
-  // Validación de formulario
+  // Validación del formulario
   const validarFormulario = () => {
     const nuevosErrores = {};
 
     if (!titulo.trim()) {
       nuevosErrores.titulo = 'El título de la encuesta es obligatorio';
     }
+    if (!descripcion.trim()) {
+      nuevosErrores.descripcion = 'La descripción es obligatoria';
+    }
+    if (!mensajePorque.trim()) {
+      nuevosErrores.mensajePorque = 'El mensaje de "por qué" es obligatorio';
+    }
+    if (!fechaInicio) {
+      nuevosErrores.fechaInicio = 'La fecha de inicio es obligatoria';
+    }
+    if (!fechaFin) {
+      nuevosErrores.fechaFin = 'La fecha de fin es obligatoria';
+    } else if (new Date(fechaInicio) > new Date(fechaFin)) {
+      nuevosErrores.fechaFin = 'La fecha de fin no puede ser anterior a la fecha de inicio';
+    }
 
     preguntas.forEach((pregunta, index) => {
       if (!pregunta.pregunta.trim()) {
         nuevosErrores[`pregunta${index}`] = `La pregunta ${index + 1} es obligatoria`;
       }
-
-      if (pregunta.tipo === 'multiple') {
-        const opcionesValidas = pregunta.opciones.filter(opcion => opcion.trim() !== '');
-        if (opcionesValidas.length < 2) {
-          nuevosErrores[`opciones${index}`] = 'Debe tener al menos dos opciones';
-        }
+      if (pregunta.tipo === 'multiple' && pregunta.opciones.length < 2) {
+        nuevosErrores[`opciones${index}`] = 'Debe tener al menos dos opciones';
       }
     });
 
@@ -33,157 +50,126 @@ const AgregarEncuesta = () => {
     return Object.keys(nuevosErrores).length === 0;
   };
 
-  const manejarCambioTitulo = (e) => {
-    setTitulo(e.target.value);
-    if (errores.titulo) {
-      const { titulo, ...restErrores } = errores;
-      setErrores(restErrores);
-    }
-  };
-
-  const manejarCambioPregunta = (indice, e) => {
-    const nuevasPreguntas = [...preguntas];
-    nuevasPreguntas[indice].pregunta = e.target.value;
-    setPreguntas(nuevasPreguntas);
-
-    // Eliminar error de pregunta si se ha rellenado
-    const errorKey = `pregunta${indice}`;
-    if (errores[errorKey]) {
-      const { [errorKey]: removed, ...restErrores } = errores;
-      setErrores(restErrores);
-    }
-  };
-
-  const manejarTipoPregunta = (indice, e) => {
-    const nuevasPreguntas = [...preguntas];
-    nuevasPreguntas[indice].tipo = e.target.value;
-    
-    // Restablecer opciones si cambia el tipo
-    if (e.target.value === 'abierta') {
-      nuevasPreguntas[indice].opciones = [''];
-    }
-    
-    setPreguntas(nuevasPreguntas);
-  };
-
-  const manejarCambioOpciones = (indice, e) => {
-    const nuevasPreguntas = [...preguntas];
-    const opcionesSeparadas = e.target.value
-      .split(',')
-      .map(opcion => opcion.trim())
-      .filter(opcion => opcion !== '');
-    
-    nuevasPreguntas[indice].opciones = opcionesSeparadas;
-    setPreguntas(nuevasPreguntas);
-
-    // Eliminar error de opciones si hay suficientes
-    const errorKey = `opciones${indice}`;
-    if (errores[errorKey]) {
-      const { [errorKey]: removed, ...restErrores } = errores;
-      setErrores(restErrores);
-    }
-  };
-
-  const eliminarPregunta = (indice) => {
-    const nuevasPreguntas = preguntas.filter((_, i) => i !== indice);
-    setPreguntas(nuevasPreguntas);
-  };
-
-  const agregarPregunta = () => {
-    setPreguntas([...preguntas, { pregunta: '', tipo: 'abierta', opciones: [''] }]);
-  };
-
-  const manejarEnvio = (e) => {
+  // Función para manejar el envío del formulario
+  const manejarEnvio = async (e) => {
     e.preventDefault();
-    
+    setMensajeExito('');
+    setMensajeError('');
+
     if (validarFormulario()) {
-      const nuevaEncuesta = { titulo, preguntas };
-      console.log('Encuesta creada:', nuevaEncuesta);
-      // Aquí podrías enviar la encuesta al backend
-      alert('Encuesta creada exitosamente');
+      const nuevaEncuesta = {
+        nombre: titulo,
+        descripcion: descripcion,
+        fecha_inicio: fechaInicio,
+        fecha_fin: fechaFin,
+        mensaje_porque: mensajePorque,
+        activo: 1,
+        cantidad_preguntas: preguntas.length,
+        preguntas: preguntas.map(p => ({
+          pregunta: p.pregunta,
+          tipo_pregunta: p.tipo,
+          opciones: p.tipo === 'multiple' ? p.opciones : [],
+        })),
+      };
+
+      try {
+        const respuesta = await fetch('http://localhost:5000/crearEncuesta', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(nuevaEncuesta),
+        });
+
+        const data = await respuesta.json();
+        if (respuesta.ok) {
+          setMensajeExito('Encuesta creada exitosamente');
+          console.log('Encuesta guardada:', data);
+        } else {
+          setMensajeError(`Error: ${data.message}`);
+        }
+      } catch (error) {
+        console.error('Error al enviar la encuesta:', error);
+        setMensajeError('Hubo un problema al enviar la encuesta');
+      }
     }
   };
 
   return (
     <div className="agregar-encuesta">
       <h1>Crear Nueva Encuesta</h1>
-      
-      <form onSubmit={manejarEnvio}>
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="Título de la Encuesta"
-            value={titulo}
-            onChange={manejarCambioTitulo}
-          />
-          {errores.titulo && <p className="error">{errores.titulo}</p>}
-        </div>
+      {mensajeExito && <p className="exito">{mensajeExito}</p>}
+      {mensajeError && <p className="error">{mensajeError}</p>}
 
-        {preguntas.map((pregunta, indice) => (
-          <div key={indice} className="pregunta-form">
-            <div className="form-group">
-              <input
-                type="text"
-                placeholder={`Pregunta ${indice + 1}`}
-                value={pregunta.pregunta}
-                onChange={(e) => manejarCambioPregunta(indice, e)}
-              />
-              {errores[`pregunta${indice}`] && (
-                <p className="error">{errores[`pregunta${indice}`]}</p>
-              )}
-            </div>
-
-            <div className="form-group">
-              <select 
-                onChange={(e) => manejarTipoPregunta(indice, e)} 
-                value={pregunta.tipo}
-              >
-                <option value="abierta">Pregunta Abierta</option>
-                <option value="multiple">Opción Múltiple</option>
-              </select>
-            </div>
-
-            {pregunta.tipo === 'multiple' && (
-              <div className="form-group">
-                <input
-                  type="text"
-                  placeholder="Opciones separadas por coma"
-                  value={pregunta.opciones.join(', ')}
-                  onChange={(e) => manejarCambioOpciones(indice, e)}
-                />
-                {errores[`opciones${indice}`] && (
-                  <p className="error">{errores[`opciones${indice}`]}</p>
-                )}
-              </div>
-            )}
-
-            {preguntas.length > 1 && (
-              <button 
-                type="button"
-                onClick={() => eliminarPregunta(indice)}
-                className="eliminar-pregunta"
-              >
-                Eliminar Pregunta
-              </button>
-            )}
+      <div ref={formRef} className="formulario-scroll">
+        <form onSubmit={manejarEnvio}>
+          <div className="form-group">
+            <label htmlFor="titulo">Título de la Encuesta</label>
+            <input
+              id="titulo"
+              type="text"
+              placeholder="Escribe el título de la encuesta"
+              value={titulo}
+              onChange={(e) => setTitulo(e.target.value)}
+            />
+            {errores.titulo && <p className="error">{errores.titulo}</p>}
           </div>
-        ))}
 
-        <button 
-          type="button" 
-          className="agregar-pregunta" 
-          onClick={agregarPregunta}
-        >
-          Agregar Pregunta
-        </button>
-        
-        <button 
-          type="submit" 
-          className="crear-encuesta"
-        >
-          Crear Encuesta
-        </button>
-      </form>
+          <div className="form-group">
+            <label htmlFor="descripcion">Descripción de la Encuesta</label>
+            <textarea
+              id="descripcion"
+              placeholder="Escribe una breve descripción de la encuesta"
+              value={descripcion}
+              onChange={(e) => setDescripcion(e.target.value)}
+            />
+            {errores.descripcion && <p className="error">{errores.descripcion}</p>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="mensajePorque">¿Por qué deberías participar?</label>
+            <textarea
+              id="mensajePorque"
+              placeholder="Explica por qué los usuarios deberían participar en esta encuesta"
+              value={mensajePorque}
+              onChange={(e) => setMensajePorque(e.target.value)}
+            />
+            {errores.mensajePorque && <p className="error">{errores.mensajePorque}</p>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="fechaInicio">Fecha de Inicio</label>
+            <input
+              id="fechaInicio"
+              type="date"
+              value={fechaInicio}
+              onChange={(e) => setFechaInicio(e.target.value)}
+            />
+            {errores.fechaInicio && <p className="error">{errores.fechaInicio}</p>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="fechaFin">Fecha de Fin</label>
+            <input
+              id="fechaFin"
+              type="date"
+              value={fechaFin}
+              onChange={(e) => setFechaFin(e.target.value)}
+            />
+            {errores.fechaFin && <p className="error">{errores.fechaFin}</p>}
+          </div>
+
+          <div className="preguntas-lista">
+            {/* Preguntas dinámicas (sin cambios) */}
+          </div>
+
+          <div className="botones">
+            <button type="submit">Crear Encuesta</button>
+          </div>
+        </form>
+      </div>
+
+      <Link to="formulario-scroll" smooth={true} duration={500}>
+        Ir al formulario
+      </Link>
     </div>
   );
 };

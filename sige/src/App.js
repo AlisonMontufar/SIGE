@@ -9,6 +9,7 @@ import GestionarEncuestas from './components/Encuestas/Administrador/GestionarEn
 import InicioAlumno from './components/Encuestas/Alumno/InicioAlumno';
 import Encuesta from './components/Encuestas/Alumno/Encuesta';
 import EnvModCalificaciones from './components/HistorialAcademico/Env-Mod-calificaciones';
+import DesempenoAcademico from './components/HistorialAcademico/DesempeñoAcademico';
 
 // Importa las vistas de actividades extracurriculares
 import InicioActividadesExtracurriculares from './components/ActividadesExtracurriculares/InicioActividadesExtracurriculares';
@@ -31,9 +32,11 @@ function App() {
         {/* Ruta para login */}
         <Route path="/" element={<Login />} />
         
-        {/* Rutas protegidas */}
         <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
+        
+        {/* Rutas de Calificaiones protegidas */}
         <Route path="/Calificaciones/Modificaciones" element={<PrivateRoute><EnvModCalificaciones /></PrivateRoute>} />
+        <Route path="/Calificaciones/DesempeñoAcademico" element={<PrivateRoute><DesempenoAcademico /></PrivateRoute>} />
         
         {/* Rutas de administrador protegidas */}
         <Route path="/admin" element={<PrivateRoute><InicioAdministrador /></PrivateRoute>} />
@@ -42,13 +45,13 @@ function App() {
         
         {/* Rutas de alumno protegidas */}
         <Route path="/alumno" element={<PrivateRoute><InicioAlumno /></PrivateRoute>} />
-        <Route path="/alumno/encuesta/:id" element={<PrivateRoute><Encuesta /></PrivateRoute>} />
-        
+        <Route path="/alumno/encuesta/:nombre" element={<PrivateRoute><Encuesta /></PrivateRoute>} />
+
         {/* Rutas para Actividades Extracurriculares protegidas */}
         <Route path="/eventosAcademicos" element={<PrivateRoute><InicioActividadesExtracurriculares /></PrivateRoute>} />
         <Route path="/admin/agregar-actividad" element={<PrivateRoute><AgregarActividadExtracurricular /></PrivateRoute>} />
         <Route path="/admin/gestionar-actividades" element={<PrivateRoute><GestionarActividadesExtracurriculares /></PrivateRoute>} />
-        <Route path="/admin/actividad/:id" element={<PrivateRoute><VerActividadExtracurricular /></PrivateRoute>} />
+        <Route path="/eventosAcademicos/:id" element={<PrivateRoute><VerActividadExtracurricular /></PrivateRoute>} />
 
         <Route path="/calendario" element={<Calendario />} />
         <Route path="/calificaciones" element={<Calificaciones />} />

@@ -1,35 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './InicioActividadesExtracurriculares.css';
+import NavigationMenu from '../PortalInicial/menu';  // Importa el componente NavigationMenu
 
 const InicioActividadesExtracurriculares = () => {
   const [actividades, setActividades] = useState([]);
 
   useEffect(() => {
-    // Datos de ejemplo (simulando API)
-    const actividadesData = [
-      { 
-        id: 1, 
-        nombre: 'Voluntariado Comunitario', 
-        descripcion: 'Participa en actividades de servicio a la comunidad',
-        categoria: 'Social',
-        fecha: '15 Nov 2023',
-        cupos: 20
-      },
-      { 
-        id: 2, 
-        nombre: 'Torneo de Fútbol Intercarreras', 
-        descripcion: 'Competencia deportiva entre facultades',
-        categoria: 'Deportes',
-        fecha: '20 Nov 2023',
-        cupos: 10
-      },
-    ];
-    setActividades(actividadesData);
+    // Llamar a la API para obtener las actividades
+    const fetchActividades = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/actividadesExtra');
+        const data = await response.json();
+        if (data.actividades) {
+          setActividades(data.actividades);
+        }
+      } catch (error) {
+        console.error('Error al cargar las actividades:', error);
+      }
+    };
+
+    fetchActividades();
   }, []);
 
   return (
     <div className="actividades-container">
+      <NavigationMenu /> {/* Agrega el componente NavigationMenu aquí */}
+
       <header className="actividades-header">
         <h1>Actividades Extracurriculares</h1>
         <p className="subtitle">Participa en nuestras actividades formativas</p>
@@ -46,27 +43,30 @@ const InicioActividadesExtracurriculares = () => {
         ) : (
           <div className="actividades-grid">
             {actividades.map((actividad) => (
-              <div key={actividad.id} className="actividad-card">
+              <div key={actividad.actividad_id} className="actividad-card">
                 <div className="card-header">
-                  <span className="categoria-badge">{actividad.categoria}</span>
-                  <span className="cupos-info">{actividad.cupos} cupos</span>
+                  {/* La API no tiene el campo "categoria", por lo que puedes eliminarlo o ajustarlo */}
+                  <span className="cupos-info">{actividad.cupos || 'Sin información de cupos'}</span>
                 </div>
-                <h2>{actividad.nombre}</h2>
+                <h2>{actividad.nombre_actividad}</h2>
                 <p className="descripcion">{actividad.descripcion}</p>
+
+                {/* Agregar ID oculto */}
+                <input type="hidden" value={actividad.actividad_id} className="actividad-id" />
+
                 <div className="card-footer">
                   <span className="fecha">{actividad.fecha}</span>
-                  <Link 
-                    to={`/admin/actividad/${actividad.id}`} 
-                    className="btn-secondary"
-                  >
+                  <Link to={`/eventosAcademicos/${actividad.actividad_id}`} className="btn-secondary">
                     Ver detalles
                   </Link>
+
+
+
                 </div>
               </div>
             ))}
           </div>
         )}
-
       </div>
     </div>
   );
