@@ -67,7 +67,7 @@ function NavigationMenu() {
   <ul className="dropdown-menu">
     <li onClick={() => navigateTo('/horario')}>Horarios</li>
     {/* Mostrar la opción de Calificaciones solo si el rol es "estudiante" */}
-    {role?.toLowerCase() === "estudiante" && (
+    {role?.toLowerCase() !== "maestro" && (
       <li onClick={() => navigateTo('/calificaciones')}>Calificaciones</li>
     )}
     <li onClick={() => navigateTo('/calendario')}>Calendario</li>
