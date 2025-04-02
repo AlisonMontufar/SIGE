@@ -34,8 +34,12 @@ const InicioAlumno = () => {
   }, []);
 
   return (
+    <div>
+      <div><NavigationMenu /> {/* Agrega el componente NavigationMenu aquí */}</div>
+
     <div className="alumno-container">
-      <NavigationMenu /> {/* Agrega el componente NavigationMenu aquí */}
+
+      
       <header className="encuestas-header">
         <h1>Encuestas Disponibles</h1>
         <p>Tu opinión nos ayuda a mejorar</p>
@@ -65,6 +69,7 @@ const InicioAlumno = () => {
           </article>
         ))}
       </div>
+    </div>
     </div>
   );
 };

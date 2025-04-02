@@ -57,8 +57,12 @@ function DesempenoAcademico() {
   }, {});
 
   return (
+    
+    <div>
+      <div><NavigationMenu/></div>  
+      <div>
+
     <div className="grade-management-container">
-      <NavigationMenu/>
       <header className="grade-header">
         <div className="header-top">
           <p className="professor-name"><strong>Matricula: </strong>{matricula}</p>
@@ -128,6 +132,8 @@ function DesempenoAcademico() {
             </div>
           </div>
         ))}
+      </div>
+    </div>
       </div>
     </div>
   );

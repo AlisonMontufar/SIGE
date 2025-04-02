@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaExclamationCircle, FaPaperPlane } from "react-icons/fa";
 import "./Calificaciones.css";
+import NavigationMenu from '../PortalInicial/menu';
 
 // Datos simulados de las materias
 const materiasData = [
@@ -87,7 +88,9 @@ const Calificaciones = () => {
   };
 
   return (
+    
     <div className="calificaciones-container">
+      <NavigationMenu/>
       <h2 className="title">📊 Calificaciones</h2>
 
       {/* Menú de materias */}

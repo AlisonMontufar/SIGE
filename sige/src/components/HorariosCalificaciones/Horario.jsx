@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Horarios.css';  // Importar los estilos
+import NavigationMenu from '../PortalInicial/menu';
 
 const Horario = () => {
   const [horarios, setHorarios] = useState([]);
@@ -35,6 +36,7 @@ const Horario = () => {
 
   return (
     <div className="horario-container">
+      <NavigationMenu/>
       <h1 className="titulo">Horario</h1>
       {horarios.length > 0 ? (
         <table className="horario-table">

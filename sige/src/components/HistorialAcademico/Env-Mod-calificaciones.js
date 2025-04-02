@@ -179,6 +179,10 @@ function EnvModCalificaciones() {
   };
 
   return (
+
+    <div>
+      <div><NavigationMenu/></div>  
+      <div>
     <div className="grade-management-container">
       {isSaving && (
         <div className="saving-overlay">
@@ -191,7 +195,7 @@ function EnvModCalificaciones() {
 
       <header className="grade-header">
         <div>
-          <NavigationMenu/>
+          
         </div>
         <div className="header-top">
           <p className="professor-name"><strong>Profesor: </strong>{profesorInfo.nombre || 'No disponible'}</p>
@@ -391,6 +395,8 @@ function EnvModCalificaciones() {
           </button>
         </div>
       )}
+    </div>
+        </div>  
     </div>
   );
 }
