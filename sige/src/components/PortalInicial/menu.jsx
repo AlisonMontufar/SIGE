@@ -60,22 +60,12 @@ function NavigationMenu() {
   </div>
 )}
 
-<<<<<<< HEAD
-      {/* Dropdown Calendario/Horarios */}
-      <div className="nav-item">
-        <button className="nav-button">📅 Calendario/Horarios ▼</button>
-        <ul className="dropdown-menu">
-          <li onClick={() => navigateTo('/horario')}>Horarios</li>
-          <li onClick={() => navigateTo('/calificaciones')}>Calificaciones</li>
-          <li onClick={() => navigateTo('/calendario')}>Calendario</li>
-        </ul>
-      </div>
-=======
+
      {/* Dropdown Calendario/Horarios */}
 <div className="nav-item">
   <button className="nav-button">📅 Calendario/Horarios ▼</button>
   <ul className="dropdown-menu">
-    <li onClick={() => navigateTo('/horarios')}>Horarios</li>
+    <li onClick={() => navigateTo('/horario')}>Horarios</li>
     {/* Mostrar la opción de Calificaciones solo si el rol es "estudiante" */}
     {role?.toLowerCase() === "estudiante" && (
       <li onClick={() => navigateTo('/calificaciones')}>Calificaciones</li>
@@ -83,7 +73,6 @@ function NavigationMenu() {
     <li onClick={() => navigateTo('/calendario')}>Calendario</li>
   </ul>
 </div>
->>>>>>> ab8879d9e3d89d88776ae99348f75e882ba11808
 
       {/* Mostrar matrícula y opción de cerrar sesión */}
       <div className="nav-item">
