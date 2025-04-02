@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Env-Mod-calificaciones.css';
+import NavigationMenu from '../PortalInicial/menu';
 
 function DesempenoAcademico() {
   const [materias, setMaterias] = useState([]);
@@ -57,6 +58,7 @@ function DesempenoAcademico() {
 
   return (
     <div className="grade-management-container">
+      <NavigationMenu/>
       <header className="grade-header">
         <div className="header-top">
           <p className="professor-name"><strong>Matricula: </strong>{matricula}</p>

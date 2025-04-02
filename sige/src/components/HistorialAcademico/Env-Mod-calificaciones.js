@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Env-Mod-calificaciones.css';
+import NavigationMenu from '../PortalInicial/menu';
 
 function EnvModCalificaciones() {
   const [materias, setMaterias] = useState([]);
@@ -189,6 +190,9 @@ function EnvModCalificaciones() {
       )}
 
       <header className="grade-header">
+        <div>
+          <NavigationMenu/>
+        </div>
         <div className="header-top">
           <p className="professor-name"><strong>Profesor: </strong>{profesorInfo.nombre || 'No disponible'}</p>
           <h1 className="title-green">Gestión de Calificaciones</h1>
