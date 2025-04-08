@@ -4,6 +4,9 @@ const { connectToDatabase, sql } = require('./db'); // Importar conexión a la b
 const app = express();
 const port = 5000;
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+const JWT_SECRET = "miSuperClaveSecreta123!@#";
 
 // Configuración de CORS
 app.use(cors());
@@ -26,8 +29,18 @@ app.get('/get-roles', async (req, res) => {
 });
 
 // Ruta para autenticar a un usuario
+
+
 app.post('/login', async (req, res) => {
   const { matricula, contraseña } = req.body;
+
+  // Validación básica de campos
+  if (!matricula || !contraseña) {
+    return res.status(400).json({
+      success: false,
+      message: 'Matrícula y contraseña son requeridas',
+    });
+  }
 
   try {
     const pool = await connectToDatabase();
@@ -37,31 +50,54 @@ app.post('/login', async (req, res) => {
 
     // Verificar si el usuario existe
     if (result.recordset.length === 0) {
-      return res.status(400).json({ message: 'Usuario no encontrado' });
+      return res.status(401).json({
+        success: false,
+        message: 'Credenciales inválidas',
+      });
     }
 
     const user = result.recordset[0];
 
-    // Comparar la contraseña encriptada
+    // Comparar contraseña
     const isMatch = await bcrypt.compare(contraseña, user.contraseña);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Contraseña incorrecta' });
+      return res.status(401).json({
+        success: false,
+        message: 'Credenciales inválidas',
+      });
     }
 
-    // Enviar respuesta si la autenticación es exitosa
+    // Crear payload del token
+    const payload = {
+      id: user.usuario_id,
+      matricula: user.matricula,
+      rol: user.rol_id, // Incluye el rol para autorización
+    };
+
+    // Generar token
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '8h' }); // Token válido por 8 horas
+
+    // Respuesta exitosa con token
     res.json({
+      success: true,
       message: 'Autenticación exitosa',
+      token: token,
       user: {
         id: user.usuario_id,
         nombre: user.nombre,
-        rol_id: user.rol_id,
+        matricula: user.matricula,
+        rol: user.rol_id,
       },
     });
   } catch (error) {
-    console.error('Error en el proceso de autenticación:', error);
-    res.status(500).json({ message: 'Error en el proceso de autenticación', error });
+    console.error('Error en login:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error en el servidor',
+      error: error.message,
+    });
   } finally {
-    sql.close();
+    sql.close(); // Cerrar la conexión si es necesario
   }
 });
 
